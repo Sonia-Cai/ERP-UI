@@ -3,6 +3,9 @@
 - 补齐硬性规则、速查表、自查清单
 - 建立统一目录与基础模板
 
+## 2026.04.28
+- 删除：仓库根目录静态 Demo `oversea-inbound-new.html`（规范与 `form-standard` §2.4 仍保留于文档）。
+
 ## 2026.04.27
 - 新增：`REFERENCES/form-standard.md` §2.4 表单版式类型（普通表单 / 一级分割线 / 一级带二级卡片）；一级分割线量化（1px、`--color-border-default`）；一级有标题行（2×16px 主色条 + 16 Semibold 标题、`--spacing-base-tight` 间距）。
 - 新增：仓库根目录静态 Demo `oversea-inbound-new.html`（海外仓入库—新增入库记录；发货单→仓库→SKU 级联；抽屉内一级标题 + 分割线样式落地；侧栏 `inventory`）。

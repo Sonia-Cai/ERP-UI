@@ -12,7 +12,6 @@
 |------|------|
 | **`ERP UI-skill/`** | 规范主体：`META/SKILL.md` 为总入口；`REFERENCES/` 为各专题 Markdown；`ASSETS/` 含 `design-tokens.css`、侧栏导航脚本与 SVG。 |
 | **`channel-transfer-new.html`** | 渠道调拨示例：壳层 + 列表 + 抽屉（SKU、渠道级联、库存子层级等）。 |
-| **`oversea-inbound-new.html`** | 海外仓入库示例：一级标题 + 分割线版式、发货单→仓库→SKU 级联等。 |
 | **`index.html`** / **`style.css`** | 设计 Token 预览页（可选）。 |
 
 ---
