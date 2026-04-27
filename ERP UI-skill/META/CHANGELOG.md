@@ -1,3 +1,6 @@
+## 2026.05.04
+- 优化：`channel-transfer-view.html` 只读 KV 栈 **`.kv-stack`** 行间距显式为 **16px**（对齐 `form-standard.md` §2.1.3）。
+
 ## 2026.05.03
 - 优化：`channel-transfer-view.html` **KV 字段标签**使用 **`--color-gray-7`**，标签列 **`flex: 0 0 auto`**（无固定像素宽）。
 - 对齐：`channel-transfer-view.html` **页面大标题**、**抽屉顶栏标题**与 `channel-transfer-new.html` 一致（**`--color-text-heading-2`**）；列表 **`.list-head`** 与操作类 Demo 同源规则并加注释说明。
