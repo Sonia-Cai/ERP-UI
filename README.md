@@ -12,6 +12,7 @@
 |------|------|
 | **`ERP UI-skill/`** | 规范主体：`META/SKILL.md` 为总入口；`REFERENCES/` 为各专题 Markdown；`ASSETS/` 含 `design-tokens.css`、侧栏导航脚本与 SVG。 |
 | **`channel-transfer-new.html`** | 渠道调拨示例：壳层 + 列表 + 抽屉（SKU、渠道级联、库存子层级等）。 |
+| **`channel-transfer-view.html`** | 同上业务模块的**查看**示例：列表 + 只读 KV 抽屉（无输入框外观）。 |
 | **`index.html`** / **`style.css`** | 设计 Token 预览页（可选）。 |
 
 ---

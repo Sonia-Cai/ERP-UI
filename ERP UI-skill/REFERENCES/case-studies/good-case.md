@@ -45,3 +45,19 @@
 - **两则 Figma 画板的像素拆解、列表示例、链接**：[`view-form-reference.md`](../view-form-reference.md)  
 
 做「查看详情」「主从列表 + 只读抽屉」类 **Demo** 时，优先打开 **`view-form-reference.md`** 对照画板，再对齐 **`form-standard.md`** 中的 Token 与禁则。
+
+---
+
+## 4. 查看渠道调拨记录（只读抽屉 Demo）
+
+### 预览链接
+
+在**仓库根目录**用浏览器打开：  
+**[channel-transfer-view.html](../../../channel-transfer-view.html)**
+
+### 布局与规范对齐说明（AI 可识别）
+
+1. **业务**：库存 · 海外仓渠道调拨管理 · **查看**渠道调拨记录；侧栏 **`ERP_NAV_ACTIVE_KEY = 'inventory'`**。  
+2. **只读 KV**（`form-standard.md` **§2.1.3**）：抽屉内字段顺序为 **SKU → From 渠道 → To 渠道 → 仓库名称 → 仓库编码 → 调拨数量 → 单据状态 → 审批人 → 备注**；左标签右值，行间 **16px**（`--spacing-base`）、标签与值横向 **12px**（`--spacing-base-tight`）；无输入框外观。  
+3. **抽屉**（`form-standard.md` **§2.1.4-B**、**§4.1**）：标题栏 **56px**；`width: max-content; max-width: var(--drawer-width-max)`；底栏 **56px**，**关闭**为主按钮居右、**导出**为次按钮。  
+4. **列表区**：面包屑 + 工具栏 + 表格 + 操作列「查看」，与 `page-list.md` 列表骨架一致。

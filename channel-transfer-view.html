@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>【查看】海外仓渠道调拨记录</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./ERP UI-skill/ASSETS/design-tokens.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-family); font-size: var(--font-size-regular); line-height: var(--line-height-regular); color: var(--color-text-body); background: var(--color-bg-page); -webkit-font-smoothing: antialiased; }
+
+    .page-shell { display: flex; height: 100vh; overflow: hidden; }
+    .erp-sidebar {
+      width: var(--layout-nav-rail-width);
+      flex-shrink: 0;
+      background: var(--color-bg-page);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    .nav-rail-logo {
+      flex-shrink: 0;
+      height: var(--nav-logo-zone-height);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 14px 19px;
+    }
+    .nav-rail-brand-logo { display: block; max-width: 52px; max-height: 52px; width: auto; height: auto; object-fit: contain; }
+    .nav-rail-item {
+      margin: 0 var(--nav-rail-item-outer-padding-x);
+      padding: var(--nav-rail-item-outer-padding-y) 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+    }
+    .nav-rail-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--nav-rail-icon-label-gap);
+      padding: var(--nav-rail-item-inner-padding);
+      border-radius: var(--radius-large);
+      transition: background 0.12s, color 0.12s;
+    }
+    .nav-rail-icon-slot { width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .nav-rail-icon-img { width: 20px; height: 20px; display: block; object-fit: contain; }
+    .nav-rail-label {
+      font-size: var(--font-size-nav-rail-label);
+      line-height: var(--line-height-nav-rail-label);
+      font-weight: var(--font-weight-regular);
+      text-align: center;
+      max-width: 62px;
+    }
+    .nav-rail-item:hover:not(.active) .nav-rail-inner { background: var(--color-gray-2); }
+    .nav-rail-item.active { color: var(--color-primary); }
+    .nav-rail-item.active .nav-rail-inner { background: var(--color-primary-bg); }
+    .nav-rail-item.active .nav-rail-label { font-weight: var(--font-weight-semibold); }
+
+    .erp-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; min-width: 0; background: var(--color-bg-container); }
+    .erp-chrome {
+      height: var(--layout-chrome-header-height);
+      flex-shrink: 0;
+      background: var(--color-bg-page);
+      border-bottom: 1px solid var(--color-border-default);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--spacing-loose);
+      gap: var(--spacing-base);
+    }
+    .tab-strip { display: flex; align-items: flex-end; gap: var(--nav-tab-gap); min-width: 0; flex: 1; overflow-x: auto; }
+    .erp-tab {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: var(--layout-tab-bar-height);
+      padding: 8px 12px;
+      border: none;
+      border-radius: var(--radius-chrome-tab) var(--radius-chrome-tab) 0 0;
+      background: transparent;
+      font-size: var(--font-size-regular);
+      color: var(--color-text-body);
+      cursor: pointer;
+      font-family: var(--font-family);
+      line-height: 22px;
+      transition: background 0.12s, box-shadow 0.12s;
+    }
+    .erp-tab:hover:not(.active) { background: var(--color-chrome-tab-hover-bg); }
+    .erp-tab.active { background: var(--color-bg-container); box-shadow: var(--shadow-tab-lift); }
+    .erp-tab-close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      padding: 0;
+      border: none;
+      background: none;
+      color: inherit;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+    .erp-tab-close:hover { background: var(--color-gray-2); }
+    .erp-chrome-right {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: var(--nav-chrome-cluster-gap);
+    }
+    .chrome-icon-btn {
+      width: var(--nav-chrome-icon-size);
+      height: var(--nav-chrome-icon-size);
+      padding: 0;
+      border: none;
+      background: none;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-small);
+    }
+    .chrome-icon-btn:hover { background: var(--color-gray-2); color: var(--color-text-body); }
+    .chrome-locale {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0;
+      border: none;
+      background: none;
+      font-size: var(--font-size-regular);
+      line-height: 22px;
+      color: var(--color-text-body);
+      cursor: pointer;
+      font-family: var(--font-family);
+    }
+    .chrome-time { font-size: var(--font-size-regular); line-height: 22px; color: var(--color-text-body); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .chrome-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-family: var(--font-family);
+    }
+    .chrome-avatar {
+      width: var(--nav-user-avatar-size);
+      height: var(--nav-user-avatar-size);
+      border-radius: var(--nav-user-avatar-radius);
+      background: var(--color-brand-2);
+      color: var(--color-primary);
+      font-size: 10px;
+      font-weight: var(--font-weight-semibold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chrome-user-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: var(--font-size-regular);
+      line-height: 22px;
+      color: var(--color-text-body);
+    }
+
+    .list-content { flex: 1; padding: var(--spacing-loose); overflow-y: auto; }
+    .breadcrumb {
+      font-size: var(--font-size-small);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-base);
+      line-height: 22px;
+    }
+    .breadcrumb a { color: var(--color-text-secondary); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--color-primary); }
+    .breadcrumb-sep { margin: 0 6px; color: var(--color-text-disabled); }
+    .page-title {
+      font-size: var(--font-size-h5);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-heading-2);
+      margin-bottom: var(--spacing-loose);
+    }
+    .list-toolbar { display: flex; align-items: center; gap: var(--spacing-base-tight); margin-bottom: var(--spacing-base); flex-wrap: wrap; }
+    .list-bg { background: var(--color-white); border-radius: var(--radius-medium); box-shadow: var(--shadow-1); overflow: hidden; }
+    .list-head { display: flex; padding: 10px var(--spacing-base); background: var(--color-gray-1); border-bottom: 1px solid var(--color-border-default); font-size: var(--font-size-small); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); }
+    .col { flex: 1; padding: 0 var(--spacing-tight); min-width: 0; }
+    .col-sm { flex: 0 0 72px; padding: 0 var(--spacing-tight); }
+    .col-md { flex: 0 0 140px; padding: 0 var(--spacing-tight); }
+    .col-op { flex: 0 0 88px; padding: 0 var(--spacing-tight); text-align: right; }
+    .list-row { display: flex; padding: 12px var(--spacing-base); border-bottom: 1px solid var(--color-border-default); font-size: var(--font-size-regular); color: var(--color-text-body); align-items: center; }
+    .list-row:hover { background: var(--color-gray-1); }
+    .list-row:last-child { border-bottom: none; }
+    .link-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: var(--font-size-regular);
+      color: var(--color-primary);
+      cursor: pointer;
+      font-family: var(--font-family);
+    }
+    .link-btn:hover { text-decoration: underline; }
+
+    .drawer-mask { position: fixed; inset: 0; background: rgba(19,23,31,0.45); z-index: 100; opacity: 0; transition: opacity 0.25s; pointer-events: none; }
+    .drawer-mask.visible { opacity: 1; pointer-events: auto; }
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: max-content;
+      max-width: var(--drawer-width-max);
+      min-width: min(480px, 100vw);
+      background: var(--color-white);
+      box-shadow: var(--shadow-3);
+      z-index: 101;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer-header {
+      flex-shrink: 0;
+      height: 56px;
+      border-bottom: 1px solid var(--color-border-default);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-base);
+      padding: 0 var(--spacing-loose);
+    }
+    .drawer-close {
+      width: 20px;
+      height: 20px;
+      border: none;
+      background: none;
+      color: var(--color-text-body);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .drawer-close:hover { color: var(--color-text-heading-1); }
+    .drawer-title { font-size: var(--font-size-h6); font-weight: var(--font-weight-semibold); color: var(--color-text-heading-2); flex: 1; min-width: 0; }
+    .drawer-body {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: var(--spacing-loose);
+      display: flex;
+      flex-direction: column;
+    }
+    /* form-standard §2.1.3：只读 KV，左标签 · 右值；行间 16px；标签与值横向 12px */
+    .kv-stack { display: flex; flex-direction: column; gap: var(--spacing-base); }
+    .kv-row {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-base-tight);
+      font-size: var(--font-size-regular);
+      line-height: var(--line-height-regular);
+    }
+    .kv-label {
+      flex: 0 0 112px;
+      color: var(--color-text-body);
+      font-weight: var(--font-weight-regular);
+      padding-top: 1px;
+    }
+    .kv-value {
+      flex: 1;
+      min-width: 0;
+      color: var(--color-text-body);
+      word-break: break-word;
+    }
+    .kv-value.muted { color: var(--color-text-secondary); }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 10px;
+      border-radius: var(--radius-tag);
+      font-size: var(--font-size-small);
+      font-weight: var(--font-weight-semibold);
+      white-space: nowrap;
+    }
+    .status-pill.pending { background: var(--color-warning-bg); color: var(--color-warning); }
+    .status-pill.done { background: var(--color-success-bg); color: var(--color-success); }
+    .drawer-footer {
+      flex-shrink: 0;
+      height: 56px;
+      border-top: 1px solid var(--color-border-default);
+      padding: 0 var(--spacing-loose);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: var(--spacing-base-tight);
+      background: var(--color-white);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-super-tight);
+      height: var(--control-height-md);
+      padding: 0 var(--spacing-base);
+      border-radius: var(--radius-small);
+      font-size: var(--font-size-regular);
+      border: 1px solid transparent;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      font-family: var(--font-family);
+    }
+    .btn-primary { background: var(--color-primary); color: var(--color-text-inverse); border-color: var(--color-primary); }
+    .btn-primary:hover { background: var(--color-primary-hover); border-color: var(--color-primary-hover); }
+    .btn-default { background: var(--color-white); color: var(--color-text-body); border-color: var(--color-border-default); }
+    .btn-default:hover { border-color: var(--color-primary); color: var(--color-primary); }
+  </style>
+</head>
+<body>
+<div class="page-shell">
+  <aside class="erp-sidebar" id="erpNavSidebar" aria-label="一级导航"></aside>
+
+  <div class="erp-main">
+    <header class="erp-chrome">
+      <div class="tab-strip" role="tablist" aria-label="页签">
+        <button type="button" class="erp-tab active" role="tab" aria-selected="true"><span>海外仓渠道调拨</span><span class="erp-tab-close" aria-label="关闭页签" onclick="event.stopPropagation()"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2L2 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span></button>
+        <button type="button" class="erp-tab" role="tab" aria-selected="false"><span>SKU</span><span class="erp-tab-close" aria-label="关闭页签" onclick="event.stopPropagation()"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2L2 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span></button>
+      </div>
+      <div class="erp-chrome-right">
+        <button type="button" class="chrome-icon-btn" title="智能助手" aria-label="智能助手"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="currentColor" stroke-width="1.3"/><path d="M9 5v2M9 11v2M5 9h2M11 9h2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+        <button type="button" class="chrome-locale">美西<svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="margin-left:2px;vertical-align:middle" aria-hidden="true"><path d="M3.5 5.5L7 9l3.5-3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="chrome-time" id="chromeTime">2026/05/01 00:00:00</span>
+        <button type="button" class="chrome-user" aria-label="账户菜单">
+          <span class="chrome-avatar" aria-hidden="true">SC</span>
+          <span class="chrome-user-name">Sonia Cai<svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="margin-left:2px;vertical-align:middle" aria-hidden="true"><path d="M3.5 5.5L7 9l3.5-3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="list-content">
+      <nav class="breadcrumb" aria-label="面包屑">
+        <a href="#">库存</a><span class="breadcrumb-sep">/</span><span>海外仓渠道调拨管理</span>
+      </nav>
+      <h1 class="page-title">渠道调拨记录</h1>
+
+      <div class="list-toolbar">
+        <button class="btn btn-default" type="button">导出</button>
+        <button class="btn btn-default" type="button">刷新</button>
+      </div>
+
+      <div class="list-bg" role="region" aria-label="调拨记录表">
+        <div class="list-head">
+          <div class="col-sm">序号</div>
+          <div class="col-md">调拨单号</div>
+          <div class="col">SKU</div>
+          <div class="col">From 渠道</div>
+          <div class="col">To 渠道</div>
+          <div class="col-sm">数量</div>
+          <div class="col-md">状态</div>
+          <div class="col-op">操作</div>
+        </div>
+        <div class="list-row" data-idx="0">
+          <div class="col-sm">01</div>
+          <div class="col-md">DB-20260501-001</div>
+          <div class="col">10-11001-1110</div>
+          <div class="col">AMZ-S</div>
+          <div class="col">Temu-线上-B2C</div>
+          <div class="col-sm">120</div>
+          <div class="col-md"><span class="status-pill pending">待审批</span></div>
+          <div class="col-op"><button type="button" class="link-btn" onclick="openView(0)">查看</button></div>
+        </div>
+        <div class="list-row" data-idx="1">
+          <div class="col-sm">02</div>
+          <div class="col-md">DB-20260428-018</div>
+          <div class="col">10-01008-102</div>
+          <div class="col">TK-S</div>
+          <div class="col">AMZ-S</div>
+          <div class="col-sm">48</div>
+          <div class="col-md"><span class="status-pill done">已通过</span></div>
+          <div class="col-op"><button type="button" class="link-btn" onclick="openView(1)">查看</button></div>
+        </div>
+        <div class="list-row" data-idx="2">
+          <div class="col-sm">03</div>
+          <div class="col-md">DB-20260420-006</div>
+          <div class="col">10-PH100-AU</div>
+          <div class="col">AMZ-S</div>
+          <div class="col">TK-S</div>
+          <div class="col-sm">200</div>
+          <div class="col-md"><span class="status-pill done">已通过</span></div>
+          <div class="col-op"><button type="button" class="link-btn" onclick="openView(2)">查看</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="drawer-mask" id="drawerMask" onclick="closeDrawer()"></div>
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+    <div class="drawer-header">
+      <button type="button" class="drawer-close" onclick="closeDrawer()" aria-label="关闭">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <h2 class="drawer-title" id="drawerTitle">查看渠道调拨记录</h2>
+    </div>
+    <div class="drawer-body">
+      <div class="kv-stack" id="kvMount"></div>
+    </div>
+    <div class="drawer-footer">
+      <button type="button" class="btn btn-default" onclick="alert('导出为示意')">导出</button>
+      <button type="button" class="btn btn-primary" onclick="closeDrawer()">关闭</button>
+    </div>
+  </div>
+</div>
+
+<script>window.ERP_NAV_ACTIVE_KEY = 'inventory';</script>
+<script src="./ERP UI-skill/ASSETS/erp-nav-rail-figma.js"></script>
+<script>
+/**
+ * 字段顺序与业务约定一致：SKU → From → To → 仓库名称 → 仓库编码 → 调拨数量 → 单据状态 → 审批人 → 备注
+ * 版式：form-standard §2.1.3 只读 KV（左右）
+ */
+const VIEW_RECORDS = [
+  {
+    sku: '10-11001-1110',
+    fromChannel: 'AMZ-S',
+    toChannel: 'Temu-线上-B2C',
+    warehouseName: 'DE仓',
+    warehouseCode: 'WH-DE-001',
+    qty: '120',
+    statusText: '待审批',
+    statusClass: 'pending',
+    approver: '周某某',
+    remark: '旺季补货，请优先审批。若库存不足请同步运营侧。',
+  },
+  {
+    sku: '10-01008-102',
+    fromChannel: 'TK-S',
+    toChannel: 'AMZ-S',
+    warehouseName: 'TE_CO2仓',
+    warehouseCode: 'WH-US-002',
+    qty: '48',
+    statusText: '已通过',
+    statusClass: 'done',
+    approver: 'Lisa 某',
+    remark: '—',
+  },
+  {
+    sku: '10-PH100-AU',
+    fromChannel: 'AMZ-S',
+    toChannel: 'TK-S',
+    warehouseName: 'SYD仓',
+    warehouseCode: 'WH-AU-001',
+    qty: '200',
+    statusText: '已通过',
+    statusClass: 'done',
+    approver: 'David 某',
+    remark: '澳洲区域调拨，已线下确认收货窗口。',
+  },
+];
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+/** 顺序固定：SKU → From → To → 仓库名称 → 仓库编码 → 调拨数量 → 单据状态 → 审批人 → 备注 */
+function renderKv(rec) {
+  const rows = [
+    ['SKU', escapeHtml(rec.sku), false],
+    ['From 渠道', escapeHtml(rec.fromChannel), false],
+    ['To 渠道', escapeHtml(rec.toChannel), false],
+    ['仓库名称', escapeHtml(rec.warehouseName), false],
+    ['仓库编码', escapeHtml(rec.warehouseCode), false],
+    ['调拨数量', escapeHtml(rec.qty), false],
+    ['单据状态', '<span class="status-pill ' + rec.statusClass + '">' + escapeHtml(rec.statusText) + '</span>', false],
+    ['审批人', escapeHtml(rec.approver), false],
+    ['备注', rec.remark === '—' ? '—' : escapeHtml(rec.remark), rec.remark === '—'],
+  ];
+  document.getElementById('kvMount').innerHTML = rows
+    .map(
+      ([label, inner, muted]) =>
+        '<div class="kv-row" role="group">' +
+        '<div class="kv-label">' +
+        escapeHtml(label) +
+        '</div>' +
+        '<div class="kv-value' +
+        (muted ? ' muted' : '') +
+        '">' +
+        inner +
+        '</div></div>'
+    )
+    .join('');
+}
+
+function openView(idx) {
+  const rec = VIEW_RECORDS[idx];
+  if (!rec) return;
+  renderKv(rec);
+  document.getElementById('drawerMask').classList.add('visible');
+  document.getElementById('drawer').classList.add('open');
+}
+
+function closeDrawer() {
+  document.getElementById('drawerMask').classList.remove('visible');
+  document.getElementById('drawer').classList.remove('open');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (typeof mountErpNavRailFromFigma === 'function') mountErpNavRailFromFigma();
+  function tickChromeTime() {
+    var el = document.getElementById('chromeTime');
+    if (!el) return;
+    var d = new Date();
+    function p(n) { return String(n).padStart(2, '0'); }
+    el.textContent = d.getFullYear() + '/' + p(d.getMonth() + 1) + '/' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
+  }
+  tickChromeTime();
+  setInterval(tickChromeTime, 1000);
+});
+</script>
+</body>
+</html>

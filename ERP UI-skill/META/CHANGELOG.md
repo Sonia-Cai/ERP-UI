@@ -1,3 +1,6 @@
+## 2026.05.02
+- 新增：仓库根目录静态 Demo **`channel-transfer-view.html`**（库存-海外仓渠道调拨管理 · 查看渠道调拨记录；只读 KV 抽屉 + 列表骨架）；`case-studies/good-case.md` **§4**、`page-list.md` §5 增加索引链接。
+
 ## 2026.05.01
 - 重构：将两则 Figma 画板的**具体像素与业务结构**从 `form-standard.md` 迁出，集中到 **`REFERENCES/view-form-reference.md`**（供查看类 Demo / 画板还原）；`form-standard.md` **§2.1.3～2.1.4** 仅保留**查看类表单**通用原则，删除原 **2.1.5** 节。
 - 索引：`case-studies/good-case.md` 增加 **§3** 指向 `view-form-reference.md`；`SKILL.md` 触发词改为「查看类表单 / 查看表单 Demo」等泛化表述。
