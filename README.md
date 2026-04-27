@@ -30,6 +30,7 @@
 
 - **必读入口：** [`ERP UI-skill/META/SKILL.md`](./ERP%20UI-skill/META/SKILL.md)（触发词、硬性规则、需求模板）。  
 - **表单与版式：** [`ERP UI-skill/REFERENCES/form-standard.md`](./ERP%20UI-skill/REFERENCES/form-standard.md)（含一级分割线、一级标题行等 §2.4）。  
+- **查看类表单（画板 / Demo 像素参考）：** [`ERP UI-skill/REFERENCES/view-form-reference.md`](./ERP%20UI-skill/REFERENCES/view-form-reference.md)（与上条配合：上条为通用规则，本条为两则 Figma 拆解）。  
 - **壳层与侧栏：** [`ERP UI-skill/REFERENCES/navigation-shell.md`](./ERP%20UI-skill/REFERENCES/navigation-shell.md)。  
 - **优秀案例索引（含 Demo 链接）：** [`ERP UI-skill/REFERENCES/case-studies/good-case.md`](./ERP%20UI-skill/REFERENCES/case-studies/good-case.md)。  
 - **变更记录：** [`ERP UI-skill/META/CHANGELOG.md`](./ERP%20UI-skill/META/CHANGELOG.md)。
