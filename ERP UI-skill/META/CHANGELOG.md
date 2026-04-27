@@ -1,3 +1,6 @@
+## 2026.05.06
+- 优化：`channel-transfer-view.html` 抽屉底栏由「导出 / 关闭」改为 **「取消 / 确定」**（主按钮在右）；`good-case.md` §4 说明同步。
+
 ## 2026.05.05
 - 优化：`channel-transfer-view.html` 抽屉内只读区改为 **SKU 单行** + **From/To、仓库名/编码、数量/状态** 各 **双列一行** + **审批人、备注** 单行；`good-case.md` §4 说明同步。
 
