@@ -265,43 +265,39 @@
       display: flex;
       flex-direction: column;
     }
-    /* form-standard §2.1.3：只读 KV；相邻两行间距 16px；标签与值横向 12px */
-    .kv-stack { display: flex; flex-direction: column; gap: 16px; }
-    .kv-row {
+    /* form-standard §2.1.3：只读 KV — 上标题、下详情、左对齐；标题→详情 12px；相邻字段块 24px */
+    .kv-stack { display: flex; flex-direction: column; gap: var(--spacing-loose); }
+    .kv-field {
       display: flex;
+      flex-direction: column;
       align-items: flex-start;
       gap: var(--spacing-base-tight);
       font-size: var(--font-size-regular);
       line-height: var(--line-height-regular);
+      text-align: left;
     }
     .kv-label {
-      flex: 0 0 auto;
+      align-self: flex-start;
       color: var(--color-gray-7);
       font-weight: var(--font-weight-regular);
-      padding-top: 1px;
     }
     .kv-value {
-      flex: 1;
-      min-width: 0;
+      align-self: flex-start;
+      width: 100%;
+      max-width: 100%;
       color: var(--color-text-body);
       word-break: break-word;
+      text-align: left;
     }
     .kv-value.muted { color: var(--color-text-secondary); }
-    /* 双列一行：两格各为「标签 + 值」左右结构，列间距 24px */
+    /* 双列一行：两格各为「上标题、下详情」，列间距 24px */
     .kv-pair {
       display: grid;
       grid-template-columns: 1fr 1fr;
       column-gap: var(--spacing-loose);
       align-items: start;
     }
-    .kv-pair-cell {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--spacing-base-tight);
-      min-width: 0;
-    }
-    .kv-pair-cell .kv-label { flex: 0 0 auto; }
-    .kv-pair-cell .kv-value { flex: 1; min-width: 0; word-break: break-word; }
+    .kv-pair > .kv-field { min-width: 0; }
     .status-pill {
       display: inline-flex;
       align-items: center;
@@ -445,7 +441,7 @@
 <script>
 /**
  * 字段顺序：SKU → From / To → 仓库名称 / 仓库编码 → 调拨数量 / 单据状态 → 审批人 → 备注
- * 版式：form-standard §2.1.3 只读 KV（左右）；双列行内两格并列，行间 gap 16px
+ * 版式：form-standard §2.1.3 只读 KV（上标题、下详情、左对齐；标题→详情 12px；块间 24px）
  */
 const VIEW_RECORDS = [
   {
@@ -496,7 +492,7 @@ function escapeHtml(s) {
 
 function kvSingle(label, innerHtml, muted) {
   return (
-    '<div class="kv-row" role="group">' +
+    '<div class="kv-field" role="group">' +
     '<div class="kv-label">' +
     escapeHtml(label) +
     '</div>' +
@@ -513,14 +509,14 @@ function kvPair(label1, inner1, muted1, label2, inner2, muted2) {
   const c2 = muted2 ? 'kv-value muted' : 'kv-value';
   return (
     '<div class="kv-pair" role="group">' +
-    '<div class="kv-pair-cell"><div class="kv-label">' +
+    '<div class="kv-field"><div class="kv-label">' +
     escapeHtml(label1) +
     '</div><div class="' +
     c1 +
     '">' +
     inner1 +
     '</div></div>' +
-    '<div class="kv-pair-cell"><div class="kv-label">' +
+    '<div class="kv-field"><div class="kv-label">' +
     escapeHtml(label2) +
     '</div><div class="' +
     c2 +

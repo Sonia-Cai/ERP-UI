@@ -1,3 +1,10 @@
+## 2026.05.08
+- 规范：`form-standard.md` 新增 **§2.1.5**（查看类**两种典型落地**：连续只读 KV vs 摘要 + 一级分段 + 二级灰底卡片），与 **`good-case.md` §4 / §5** Demo 及 **`view-form-reference.md`** 画板索引对照；**§2.1.3**、**§11** 增加交叉引用。
+- 规范：`form-standard.md` **§2.1.4-B** 明确**查看类只读抽屉**底栏默认为 **取消 / 确定**；`view-form-reference.md` §1～§2 画板表说明与之一致。
+- 新增：仓库根目录静态 Demo **`sku-packaging-dimensions-detail-view.html`**（产品 · SKU包装尺寸；主区列表 + 只读抽屉：摘要上下 KV + 外箱/包装/产品三段一级标题与二级灰底卡片）；对照 Figma **`SKU包装尺寸-详情表单/上下布局`**（`node-id=20-35869`）。
+- 索引：`view-form-reference.md` §2 增加上下布局稿链接与 Demo 路径；`case-studies/good-case.md` **§5** 收录说明。
+- 修正：`sku-packaging-dimensions-detail-view.html` 抽屉底栏由「导出 / 关闭」改为 **取消 / 确定**；`good-case.md` **§5** 补充底栏说明。
+
 ## 2026.05.07
 - 优化：`case-studies/good-case.md` 文首增加静态 Demo 速览（§2 / §4）；§2 增加同模块 §4 只读交叉引用；§3 指向 §4 落地稿；§4 增加与 §2 对照及「查看类表单母版」说明。
 
@@ -38,6 +45,7 @@
 - 删除：仓库根目录静态 Demo `oversea-inbound-new.html`（规范与 `form-standard` §2.4 仍保留于文档）。
 
 ## 2026.04.27
+- 规范与 Demo：**查看类只读 KV** 统一为**上标题、下详情、左对齐**；**标题 → 详情** **12px**（`--spacing-base-tight`）、**相邻字段块** **24px**（`--spacing-loose`）。`form-standard.md` **§2.1.3**、`view-form-reference.md` **§4**、`case-studies/good-case.md` **§4** 已同步；`channel-transfer-view.html` 抽屉内改为 **`.kv-field`** 纵向布局与 **`.kv-stack`** 块间距 **24px**。
 - 新增：`REFERENCES/form-standard.md` §2.4 表单版式类型（普通表单 / 一级分割线 / 一级带二级卡片）；一级分割线量化（1px、`--color-border-default`）；一级有标题行（2×16px 主色条 + 16 Semibold 标题、`--spacing-base-tight` 间距）。
 - 新增：仓库根目录静态 Demo `oversea-inbound-new.html`（海外仓入库—新增入库记录；发货单→仓库→SKU 级联；抽屉内一级标题 + 分割线样式落地；侧栏 `inventory`）。
 - 新增：`META/SKILL.md`「需求提交模板」；`ASSETS/navigation/README.md` / `REFERENCES/navigation-shell.md` 补充侧栏选中 `ERP_NAV_ACTIVE_KEY` / `INDEX` 与 `ERP_NAV_ASSET_BASE`（子目录 HTML）说明。
