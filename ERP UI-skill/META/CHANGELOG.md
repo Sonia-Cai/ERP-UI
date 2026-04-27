@@ -1,6 +1,6 @@
 ## 2026.05.03
-- 优化：`channel-transfer-view.html` 页面标题、抽屉标题与 KV 标签色统一为 **`--color-gray-7`**；KV 标签列去掉 **112px** 固定宽，改为随文案 **`flex: 0 0 auto`**。
-- 修正：`channel-transfer-view.html` **页面大标题**、**抽屉顶栏标题**改回 **`--color-text-heading-2`**，与 `channel-transfer-new.html` 操作类抽屉一致；**Gray7 仅用于 KV 字段标签**；列表 `.list-head` 与操作类 Demo 同源并加注释对齐说明。
+- 优化：`channel-transfer-view.html` **KV 字段标签**使用 **`--color-gray-7`**，标签列 **`flex: 0 0 auto`**（无固定像素宽）。
+- 对齐：`channel-transfer-view.html` **页面大标题**、**抽屉顶栏标题**与 `channel-transfer-new.html` 一致（**`--color-text-heading-2`**）；列表 **`.list-head`** 与操作类 Demo 同源规则并加注释说明。
 
 ## 2026.05.02
 - 新增：仓库根目录静态 Demo **`channel-transfer-view.html`**（库存-海外仓渠道调拨管理 · 查看渠道调拨记录；只读 KV 抽屉 + 列表骨架）；`case-studies/good-case.md` **§4**、`page-list.md` §5 增加索引链接。
