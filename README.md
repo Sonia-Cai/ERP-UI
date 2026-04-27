@@ -12,7 +12,8 @@
 |------|------|
 | **`ERP UI-skill/`** | 规范主体：`META/SKILL.md` 为总入口；`REFERENCES/` 为各专题 Markdown；`ASSETS/` 含 `design-tokens.css`、侧栏导航脚本与 SVG。 |
 | **`channel-transfer-new.html`** | 渠道调拨示例：壳层 + 列表 + 抽屉（SKU、渠道级联、库存子层级等）。 |
-| **`channel-transfer-view.html`** | 同上业务模块的**查看**示例：列表 + 只读 KV 抽屉（无输入框外观）。 |
+| **`channel-transfer-view.html`** | 库存模块**查看类形态一**：列表 + 抽屉内**连续只读 KV**（上下布局、底栏取消/确定）。 |
+| **`sku-packaging-dimensions-detail-view.html`** | 产品模块**查看类形态二**：列表 + 抽屉内**摘要 KV + 一级分段 + 二级灰底卡片**（对齐 Figma「上下布局」稿）。 |
 | **`index.html`** / **`style.css`** | 设计 Token 预览页（可选）。 |
 
 ---
@@ -30,8 +31,8 @@
 ## 给设计师 / 产品 / 前端
 
 - **必读入口：** [`ERP UI-skill/META/SKILL.md`](./ERP%20UI-skill/META/SKILL.md)（触发词、硬性规则、需求模板）。  
-- **表单与版式：** [`ERP UI-skill/REFERENCES/form-standard.md`](./ERP%20UI-skill/REFERENCES/form-standard.md)（含一级分割线、一级标题行等 §2.4）。  
-- **查看类表单（画板 / Demo 像素参考）：** [`ERP UI-skill/REFERENCES/view-form-reference.md`](./ERP%20UI-skill/REFERENCES/view-form-reference.md)（与上条配合：上条为通用规则，本条为两则 Figma 拆解）。  
+- **表单与版式：** [`ERP UI-skill/REFERENCES/form-standard.md`](./ERP%20UI-skill/REFERENCES/form-standard.md)（含一级分割线、一级标题行等 §2.4；**查看类**两种抽屉落地见 **§2.1.5**）。  
+- **查看类表单（画板 / Demo 像素参考）：** [`ERP UI-skill/REFERENCES/view-form-reference.md`](./ERP%20UI-skill/REFERENCES/view-form-reference.md)（与 `form-standard` 配合：通用规则见上，本条为 Figma 画板拆解；落地 HTML 见下条 **good-case** §4 / §5）。  
 - **壳层与侧栏：** [`ERP UI-skill/REFERENCES/navigation-shell.md`](./ERP%20UI-skill/REFERENCES/navigation-shell.md)。  
 - **优秀案例索引（含 Demo 链接）：** [`ERP UI-skill/REFERENCES/case-studies/good-case.md`](./ERP%20UI-skill/REFERENCES/case-studies/good-case.md)。  
 - **变更记录：** [`ERP UI-skill/META/CHANGELOG.md`](./ERP%20UI-skill/META/CHANGELOG.md)。
