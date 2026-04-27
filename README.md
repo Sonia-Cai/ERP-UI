@@ -36,6 +36,12 @@
 
 在 Cursor 等工具中做界面任务时，可直接说明：**严格遵循本仓库 `ERP UI-skill` 规范**，并附上业务模块名，便于对齐侧栏选中态（`ERP_NAV_ACTIVE_KEY`）等细节。
 
+**请按以下模板发起需求（复制后把【XX-XXX】与业务说明改成你的场景即可）：**
+
+> 请严格遵循我项目里的 B端ERP UI Skill 全套规范，遵循 design-tokens 设计变量、组件规范、表单规范、页面布局规范，同时匹配万物ERP用户画像角色特征，帮我设计：【XX-XXX】 的 demo 样式
+
+更完整的填空说明（含业务模块、侧栏选中等）见 [`ERP UI-skill/META/SKILL.md`](./ERP%20UI-skill/META/SKILL.md) 中的「需求提交模板」。
+
 ---
 
 ## 技术说明
