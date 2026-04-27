@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ERP Design System · Token Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="design-tokens.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+
+    <header class="page-header">
+      <h1 class="page-title">ERP Design Tokens</h1>
+      <p class="page-desc">来源自 Figma 全局规范，所有变量定义在 <code>design-tokens.css</code> 中</p>
+    </header>
+
+    <!-- Colors -->
+    <section class="section">
+      <h2 class="section-title">颜色 · Colors</h2>
+
+      <div class="token-group">
+        <h3 class="group-label">Brand / 品牌蓝</h3>
+        <div class="swatch-row">
+          <div class="swatch" style="background: var(--color-brand-1)"><span>Brand1</span><small>#EAF1FF</small></div>
+          <div class="swatch" style="background: var(--color-brand-2)"><span>Brand2</span><small>#C8DAFE</small></div>
+          <div class="swatch" style="background: var(--color-brand-3)"><span>Brand3</span><small>#A4C1FD</small></div>
+          <div class="swatch" style="background: var(--color-brand-4)"><span>Brand4</span><small>#7FA7FC</small></div>
+          <div class="swatch" style="background: var(--color-brand-5)"><span>Brand5</span><small>#5A8BFB</small></div>
+          <div class="swatch swatch--primary" style="background: var(--color-brand-6)"><span>Brand6</span><small>#346BFA</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-brand-7)"><span>Brand7</span><small>#1E4CCF</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-brand-8)"><span>Brand8</span><small>#0C31A4</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-brand-9)"><span>Brand9</span><small>#031B78</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-brand-10)"><span>Brand10</span><small>#010058</small></div>
+        </div>
+      </div>
+
+      <div class="token-group">
+        <h3 class="group-label">Green / 成功色</h3>
+        <div class="swatch-row">
+          <div class="swatch" style="background: var(--color-green-1)"><span>Green1</span><small>#EDFFEB</small></div>
+          <div class="swatch" style="background: var(--color-green-2)"><span>Green2</span><small>#B9EEB4</small></div>
+          <div class="swatch" style="background: var(--color-green-3)"><span>Green3</span><small>#83DE7C</small></div>
+          <div class="swatch" style="background: var(--color-green-4)"><span>Green4</span><small>#56CD4F</small></div>
+          <div class="swatch" style="background: var(--color-green-5)"><span>Green5</span><small>#2DBB27</small></div>
+          <div class="swatch swatch--primary" style="background: var(--color-green-6)"><span>Green6</span><small>#0DAA07</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-green-7)"><span>Green7</span><small>#099305</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-green-8)"><span>Green8</span><small>#067B03</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-green-9)"><span>Green9</span><small>#046402</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-green-10)"><span>Green10</span><small>#014D00</small></div>
+        </div>
+      </div>
+
+      <div class="token-group">
+        <h3 class="group-label">Red / 错误色</h3>
+        <div class="swatch-row">
+          <div class="swatch" style="background: var(--color-red-1)"><span>Red1</span><small>#FFE8E9</small></div>
+          <div class="swatch" style="background: var(--color-red-2)"><span>Red2</span><small>#FFBDBF</small></div>
+          <div class="swatch" style="background: var(--color-red-3)"><span>Red3</span><small>#FF939A</small></div>
+          <div class="swatch" style="background: var(--color-red-4)"><span>Red4</span><small>#FF6879</small></div>
+          <div class="swatch" style="background: var(--color-red-5)"><span>Red5</span><small>#FF3D60</small></div>
+          <div class="swatch swatch--primary" style="background: var(--color-red-6)"><span>Red6</span><small>#FF0E53</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-red-7)"><span>Red7</span><small>#D30643</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-red-8)"><span>Red8</span><small>#A70433</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-red-9)"><span>Red9</span><small>#7A0223</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-red-10)"><span>Red10</span><small>#4E0013</small></div>
+        </div>
+      </div>
+
+      <div class="token-group">
+        <h3 class="group-label">Gold / 警告色</h3>
+        <div class="swatch-row">
+          <div class="swatch" style="background: var(--color-gold-1)"><span>Gold1</span><small>#FFFBF4</small></div>
+          <div class="swatch" style="background: var(--color-gold-2)"><span>Gold2</span><small>#FFF3DC</small></div>
+          <div class="swatch" style="background: var(--color-gold-3)"><span>Gold3</span><small>#FFE9BE</small></div>
+          <div class="swatch" style="background: var(--color-gold-4)"><span>Gold4</span><small>#FFDD98</small></div>
+          <div class="swatch" style="background: var(--color-gold-5)"><span>Gold5</span><small>#FFD069</small></div>
+          <div class="swatch swatch--primary" style="background: var(--color-gold-6)"><span>Gold6</span><small>#FFC000</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-gold-7)"><span>Gold7</span><small>#CD9A00</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-gold-8)"><span>Gold8</span><small>#9E7600</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-gold-9)"><span>Gold9</span><small>#715400</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-gold-10)"><span>Gold10</span><small>#473300</small></div>
+        </div>
+      </div>
+
+      <div class="token-group">
+        <h3 class="group-label">Orange / 橙色</h3>
+        <div class="swatch-row">
+          <div class="swatch" style="background: var(--color-orange-1)"><span>Orange1</span><small>#FFF6F0</small></div>
+          <div class="swatch" style="background: var(--color-orange-2)"><span>Orange2</span><small>#FFE3D1</small></div>
+          <div class="swatch" style="background: var(--color-orange-3)"><span>Orange3</span><small>#FFCEAF</small></div>
+          <div class="swatch" style="background: var(--color-orange-4)"><span>Orange4</span><small>#FFB788</small></div>
+          <div class="swatch" style="background: var(--color-orange-5)"><span>Orange5</span><small>#FF9E5A</small></div>
+          <div class="swatch swatch--primary" style="background: var(--color-orange-6)"><span>Orange6</span><small>#FF840E</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-orange-7)"><span>Orange7</span><small>#CC680B</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-orange-8)"><span>Orange8</span><small>#9E5006</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-orange-9)"><span>Orange9</span><small>#713702</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-orange-10)"><span>Orange10</span><small>#482000</small></div>
+        </div>
+      </div>
+
+      <div class="token-group">
+        <h3 class="group-label">Purple / 紫色</h3>
+        <div class="swatch-row">
+          <div class="swatch" style="background: var(--color-purple-1)"><span>Purple1</span><small>#E9EBFF</small></div>
+          <div class="swatch" style="background: var(--color-purple-2)"><span>Purple2</span><small>#C7CAFE</small></div>
+          <div class="swatch" style="background: var(--color-purple-3)"><span>Purple3</span><small>#A6A9FD</small></div>
+          <div class="swatch" style="background: var(--color-purple-4)"><span>Purple4</span><small>#8986FC</small></div>
+          <div class="swatch" style="background: var(--color-purple-5)"><span>Purple5</span><small>#7060FB</small></div>
+          <div class="swatch swatch--primary" style="background: var(--color-purple-6)"><span>Purple6</span><small>#5F34FA</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-purple-7)"><span>Purple7</span><small>#491ECA</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-purple-8)"><span>Purple8</span><small>#350F9B</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-purple-9)"><span>Purple9</span><small>#24056F</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-purple-10)"><span>Purple10</span><small>#130046</small></div>
+        </div>
+      </div>
+
+      <div class="token-group">
+        <h3 class="group-label">Turquoise / 绿松石蓝</h3>
+        <div class="swatch-row">
+          <div class="swatch" style="background: var(--color-turquoise-1)"><span>T1</span><small>#F0FAFF</small></div>
+          <div class="swatch" style="background: var(--color-turquoise-2)"><span>T2</span><small>#D4F0FF</small></div>
+          <div class="swatch" style="background: var(--color-turquoise-3)"><span>T3</span><small>#B5E6FF</small></div>
+          <div class="swatch" style="background: var(--color-turquoise-4)"><span>T4</span><small>#90DBFF</small></div>
+          <div class="swatch" style="background: var(--color-turquoise-5)"><span>T5</span><small>#64CFFF</small></div>
+          <div class="swatch swatch--primary" style="background: var(--color-turquoise-6)"><span>T6</span><small>#00C2FF</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-turquoise-7)"><span>T7</span><small>#009BCD</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-turquoise-8)"><span>T8</span><small>#00769D</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-turquoise-9)"><span>T9</span><small>#00536F</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-turquoise-10)"><span>T10</span><small>#003245</small></div>
+        </div>
+      </div>
+
+      <div class="token-group">
+        <h3 class="group-label">Cyan / 青色</h3>
+        <div class="swatch-row">
+          <div class="swatch" style="background: var(--color-cyan-1)"><span>Cyan1</span><small>#E9FFF2</small></div>
+          <div class="swatch" style="background: var(--color-cyan-2)"><span>Cyan2</span><small>#BCFFDC</small></div>
+          <div class="swatch" style="background: var(--color-cyan-3)"><span>Cyan3</span><small>#8FFFC8</small></div>
+          <div class="swatch" style="background: var(--color-cyan-4)"><span>Cyan4</span><small>#64FFBB</small></div>
+          <div class="swatch" style="background: var(--color-cyan-5)"><span>Cyan5</span><small>#35FFB2</small></div>
+          <div class="swatch swatch--primary" style="background: var(--color-cyan-6)"><span>Cyan6</span><small>#00F4B4</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-cyan-7)"><span>Cyan7</span><small>#00D38F</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-cyan-8)"><span>Cyan8</span><small>#00A770</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-cyan-9)"><span>Cyan9</span><small>#007A51</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-cyan-10)"><span>Cyan10</span><small>#004E32</small></div>
+        </div>
+      </div>
+
+      <div class="token-group">
+        <h3 class="group-label">Neutral / 中性灰</h3>
+        <div class="swatch-row">
+          <div class="swatch swatch--bordered" style="background: var(--color-white)"><span>White</span><small>#FFFFFF</small></div>
+          <div class="swatch" style="background: var(--color-gray-1)"><span>Gray1</span><small>#F3F5F8</small></div>
+          <div class="swatch" style="background: var(--color-gray-2)"><span>Gray2</span><small>#EBEDF0</small></div>
+          <div class="swatch" style="background: var(--color-gray-3)"><span>Gray3</span><small>#E4E6EA</small></div>
+          <div class="swatch" style="background: var(--color-gray-4)"><span>Gray4</span><small>#CFD2D7</small></div>
+          <div class="swatch" style="background: var(--color-gray-5)"><span>Gray5</span><small>#C1C5CC</small></div>
+          <div class="swatch" style="background: var(--color-gray-6)"><span>Gray6</span><small>#A1A6B0</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-gray-7)"><span>Gray7</span><small>#858B97</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-gray-8)"><span>Gray8</span><small>#717887</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-gray-9)"><span>Gray9</span><small>#586071</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-gray-10)"><span>Gray10</span><small>#454D5F</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-gray-11)"><span>Gray11</span><small>#323B4B</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-gray-12)"><span>Gray12</span><small>#272D3A</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-gray-13)"><span>Gray13</span><small>#1E242F</small></div>
+          <div class="swatch swatch--dark" style="background: var(--color-gray-14)"><span>Gray14</span><small>#13171F</small></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography -->
+    <section class="section">
+      <h2 class="section-title">排版 · Typography</h2>
+      <div class="token-group">
+        <div class="type-row" style="font-size: var(--font-size-h4); line-height: var(--line-height-h4); font-weight: var(--font-weight-semibold);">
+          H4 · 24px / 36px · 600 — 一级标题
+        </div>
+        <div class="type-row" style="font-size: var(--font-size-h5); line-height: var(--line-height-h5); font-weight: var(--font-weight-semibold);">
+          H5 · 20px / 30px · 600 — 二级标题
+        </div>
+        <div class="type-row" style="font-size: var(--font-size-h6); line-height: var(--line-height-h6); font-weight: var(--font-weight-semibold);">
+          H6 · 16px / 24px · 600 — 三级标题
+        </div>
+        <div class="type-row" style="font-size: var(--font-size-regular); line-height: var(--line-height-regular);">
+          Regular · 14px / 22px · 400 — 正文
+        </div>
+        <div class="type-row" style="font-size: var(--font-size-small); line-height: var(--line-height-small); color: var(--color-text-secondary);">
+          Small · 12px / 20px · 400 — 辅助文本
+        </div>
+      </div>
+    </section>
+
+    <!-- Spacing -->
+    <section class="section">
+      <h2 class="section-title">间距 · Spacing</h2>
+      <div class="token-group spacing-group">
+        <div class="spacing-item"><div class="spacing-bar" style="width: var(--spacing-super-tight)"></div><span>super-tight · 2px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width: var(--spacing-extra-tight)"></div><span>extra-tight · 4px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width: var(--spacing-tight)"></div><span>tight · 8px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width: var(--spacing-base-tight)"></div><span>base-tight · 12px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width: var(--spacing-base)"></div><span>base · 16px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width: var(--spacing-base-loose)"></div><span>base-loose · 20px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width: var(--spacing-loose)"></div><span>loose · 24px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width: var(--spacing-extra-loose)"></div><span>extra-loose · 32px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width: var(--spacing-super-loose)"></div><span>super-loose · 40px</span></div>
+      </div>
+    </section>
+
+    <!-- Radius -->
+    <section class="section">
+      <h2 class="section-title">圆角 · Border Radius</h2>
+      <div class="token-group radius-group">
+        <div class="radius-item"><div class="radius-box" style="border-radius: var(--radius-extra-small)"></div><span>extra-small · 3px</span></div>
+        <div class="radius-item"><div class="radius-box" style="border-radius: var(--radius-small)"></div><span>small · 3px</span></div>
+        <div class="radius-item"><div class="radius-box" style="border-radius: var(--radius-medium)"></div><span>medium · 6px</span></div>
+        <div class="radius-item"><div class="radius-box" style="border-radius: var(--radius-large)"></div><span>large · 10px</span></div>
+        <div class="radius-item"><div class="radius-box" style="border-radius: var(--radius-full)"></div><span>full · 9999px</span></div>
+      </div>
+    </section>
+
+    <!-- Shadows -->
+    <section class="section">
+      <h2 class="section-title">阴影 · Shadows</h2>
+      <div class="token-group shadow-group">
+        <div class="shadow-item"><div class="shadow-box" style="box-shadow: var(--shadow-0)"></div><span>shadow-0 · none</span></div>
+        <div class="shadow-item"><div class="shadow-box" style="box-shadow: var(--shadow-1)"></div><span>shadow-1</span></div>
+        <div class="shadow-item"><div class="shadow-box" style="box-shadow: var(--shadow-2)"></div><span>shadow-2</span></div>
+        <div class="shadow-item"><div class="shadow-box" style="box-shadow: var(--shadow-3)"></div><span>shadow-3</span></div>
+      </div>
+    </section>
+
+    <!-- Control Heights -->
+    <section class="section">
+      <h2 class="section-title">控件高度 · Control Height</h2>
+      <div class="token-group control-group">
+        <div class="control-item"><div class="control-bar" style="height: var(--control-height-sm)"></div><span>sm · 24px</span></div>
+        <div class="control-item"><div class="control-bar" style="height: var(--control-height-md)"></div><span>md · 32px</span></div>
+        <div class="control-item"><div class="control-bar" style="height: var(--control-height-lg)"></div><span>lg · 40px</span></div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
