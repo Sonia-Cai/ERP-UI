@@ -2,6 +2,8 @@
 
 本页收录与 **ERP UI Skill**（`design-tokens`、`navigation-shell`、`form-standard`、`business-components`、`page-list`、`view-form-reference` 等）对齐的可对照案例，供还原页面或 Agent 检索。
 
+**静态 HTML 示例（仓库根目录）：** **§2** 新增渠道调拨（`channel-transfer-new.html`）· **§4** 查看渠道调拨（`channel-transfer-view.html`）
+
 ---
 
 ## 1. 验货标准表单（截图案例）
@@ -33,7 +35,8 @@
 1. **壳层**：一级侧栏（`erp-nav-rail-figma.js`）+ 顶栏页签 + 右上区，见 `navigation-shell.md`；侧栏当前模块为**库存**（`ERP_NAV_ACTIVE_KEY = 'inventory'`）。  
 2. **列表区**：面包屑/工具栏/表格骨架，见 `page-list.md`。  
 3. **抽屉表单**：SKU 搜索下拉（双行、400px）、From 筛选 + 渠道库存**子层级**灰底白卡表格（见 `form-standard.md` 第 12 节）、To 渠道级联、调拨日期、审批人搜索下拉、备注、底栏按钮顺序（取消 / 新增下一条 / 确定）。  
-4. **业务组件**：SearchSelect / ChannelCascader 行为见 `business-components.md`。
+4. **业务组件**：SearchSelect / ChannelCascader 行为见 `business-components.md`。  
+5. **同模块只读查看**：列表 + 只读 KV 抽屉落地示例见 **§4**（`channel-transfer-view.html`）。
 
 ---
 
@@ -44,11 +47,14 @@
 - **通用规则**（只读 KV、复合版式、抽屉宽度、行高分档原则）：`form-standard.md` **§2.1.3～2.1.4**、**§4.1**。  
 - **两则 Figma 画板的像素拆解、列表示例、链接**：[`view-form-reference.md`](../view-form-reference.md)  
 
-做「查看详情」「主从列表 + 只读抽屉」类 **Demo** 时，优先打开 **`view-form-reference.md`** 对照画板，再对齐 **`form-standard.md`** 中的 Token 与禁则。
+做「查看详情」「主从列表 + 只读抽屉」类 **Demo** 时，优先打开 **`view-form-reference.md`** 对照画板，再对齐 **`form-standard.md`** 中的 Token 与禁则。  
+**已落地的参考实现**（库存 · 海外仓渠道调拨 · 查看）：见 **§4** — **`channel-transfer-view.html`**。
 
 ---
 
 ## 4. 查看渠道调拨记录（只读抽屉 Demo）
+
+与 **§2** 同一业务域（库存 · 海外仓渠道调拨）的**只读查看**对照稿：列表骨架 + 右侧抽屉内只读 KV（含双列行）、底栏 **取消 / 确定**，可直接作为「查看类表单」静态 Demo 母版扩展。
 
 ### 预览链接
 
