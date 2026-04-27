@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>【v9】新增渠道调拨记录</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./ERP UI-skill/ASSETS/design-tokens.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-family); font-size: var(--font-size-regular); line-height: var(--line-height-regular); color: var(--color-text-body); background: var(--color-bg-page); -webkit-font-smoothing: antialiased; }
+    button, input, select, textarea { font-family: var(--font-family); }
+
+    /* ── App Shell：ERP UI-skill / REFERENCES/navigation-shell.md + Figma「ERP 导航」── */
+    .page-shell { display: flex; height: 100vh; overflow: hidden; }
+    .erp-sidebar {
+      width: var(--layout-nav-rail-width);
+      flex-shrink: 0;
+      background: var(--color-bg-page);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    .nav-rail-logo {
+      flex-shrink: 0;
+      height: var(--nav-logo-zone-height);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 14px 19px;
+    }
+    .nav-rail-brand-logo { display: block; max-width: 52px; max-height: 52px; width: auto; height: auto; object-fit: contain; }
+    .nav-rail-item {
+      margin: 0 var(--nav-rail-item-outer-padding-x);
+      padding: var(--nav-rail-item-outer-padding-y) 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+    }
+    .nav-rail-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--nav-rail-icon-label-gap);
+      padding: var(--nav-rail-item-inner-padding);
+      border-radius: var(--radius-large);
+      transition: background 0.12s, color 0.12s;
+    }
+    .nav-rail-icon-slot { width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .nav-rail-icon-img { width: 20px; height: 20px; display: block; object-fit: contain; }
+    .nav-rail-label {
+      font-size: var(--font-size-nav-rail-label);
+      line-height: var(--line-height-nav-rail-label);
+      font-weight: var(--font-weight-regular);
+      text-align: center;
+      max-width: 62px;
+    }
+    .nav-rail-item:hover:not(.active) .nav-rail-inner { background: var(--color-gray-2); }
+    .nav-rail-item.active { color: var(--color-primary); }
+    .nav-rail-item.active .nav-rail-inner { background: var(--color-primary-bg); }
+    .nav-rail-item.active .nav-rail-label { font-weight: var(--font-weight-semibold); }
+
+    .erp-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; min-width: 0; background: var(--color-bg-container); }
+    .erp-chrome {
+      height: var(--layout-chrome-header-height);
+      flex-shrink: 0;
+      background: var(--color-bg-page);
+      border-bottom: 1px solid var(--color-border-default);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--spacing-loose);
+      gap: var(--spacing-base);
+    }
+    .tab-strip { display: flex; align-items: flex-end; gap: var(--nav-tab-gap); min-width: 0; flex: 1; overflow-x: auto; }
+    .erp-tab {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: var(--layout-tab-bar-height);
+      padding: 8px 12px;
+      border: none;
+      border-radius: var(--radius-chrome-tab) var(--radius-chrome-tab) 0 0;
+      background: transparent;
+      font-size: var(--font-size-regular);
+      color: var(--color-text-body);
+      cursor: pointer;
+      font-family: var(--font-family);
+      line-height: 22px;
+      transition: background 0.12s, box-shadow 0.12s;
+    }
+    .erp-tab:hover:not(.active) { background: var(--color-chrome-tab-hover-bg); }
+    .erp-tab.active {
+      background: var(--color-bg-container);
+      box-shadow: var(--shadow-tab-lift);
+    }
+    .erp-tab-close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      padding: 0;
+      border: none;
+      background: none;
+      color: inherit;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+    .erp-tab-close:hover { background: var(--color-gray-2); }
+
+    .erp-chrome-right {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: var(--nav-chrome-cluster-gap);
+    }
+    .chrome-icon-btn {
+      width: var(--nav-chrome-icon-size);
+      height: var(--nav-chrome-icon-size);
+      padding: 0;
+      border: none;
+      background: none;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-small);
+    }
+    .chrome-icon-btn:hover { background: var(--color-gray-2); color: var(--color-text-body); }
+    .chrome-locale {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0;
+      border: none;
+      background: none;
+      font-size: var(--font-size-regular);
+      line-height: 22px;
+      color: var(--color-text-body);
+      cursor: pointer;
+      font-family: var(--font-family);
+    }
+    .chrome-time { font-size: var(--font-size-regular); line-height: 22px; color: var(--color-text-body); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .chrome-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-family: var(--font-family);
+    }
+    .chrome-avatar {
+      width: var(--nav-user-avatar-size);
+      height: var(--nav-user-avatar-size);
+      border-radius: var(--nav-user-avatar-radius);
+      background: var(--color-brand-2);
+      color: var(--color-primary);
+      font-size: 10px;
+      font-weight: var(--font-weight-semibold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chrome-user-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: var(--font-size-regular);
+      line-height: 22px;
+      color: var(--color-text-body);
+    }
+    .list-content { flex: 1; padding: var(--spacing-loose); overflow-y: auto; }
+    .list-toolbar { display: flex; align-items: center; gap: var(--spacing-base-tight); margin-bottom: var(--spacing-base); flex-wrap: wrap; }
+    .list-bg { background: var(--color-white); border-radius: var(--radius-medium); box-shadow: var(--shadow-1); overflow: hidden; }
+    .list-head { display: flex; padding: 10px var(--spacing-base); background: var(--color-gray-1); border-bottom: 1px solid var(--color-border-default); font-size: var(--font-size-small); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); }
+    .col { flex: 1; padding: 0 var(--spacing-tight); }
+    .col-sm { flex: 0 0 60px; padding: 0 var(--spacing-tight); }
+    .col-lg { flex: 2; padding: 0 var(--spacing-tight); }
+    .list-row { display: flex; padding: 12px var(--spacing-base); border-bottom: 1px solid var(--color-border-default); font-size: var(--font-size-regular); color: var(--color-text-body); }
+    .list-row:hover { background: var(--color-gray-1); }
+    .list-row:last-child { border-bottom: none; }
+
+    /* ── Drawer ── */
+    .drawer-mask { position: fixed; inset: 0; background: rgba(19,23,31,0.45); z-index: 100; opacity: 0; transition: opacity 0.25s; pointer-events: none; }
+    .drawer-mask.visible { opacity: 1; pointer-events: auto; }
+    /* 宽度随内容最大需求收缩，上限为视口 80%（与 form-standard §4.1 一致） */
+    .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: max-content; max-width: var(--drawer-width-max); background: var(--color-white); box-shadow: var(--shadow-3); z-index: 101; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1); }
+    .drawer.open { transform: translateX(0); }
+    .drawer-header { flex-shrink: 0; height: 56px; border-bottom: 1px solid var(--color-border-default); display: flex; align-items: center; gap: var(--spacing-base); padding: 0 var(--spacing-loose); }
+    .drawer-close { width: 20px; height: 20px; border: none; background: none; color: var(--color-text-body); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .drawer-close:hover { color: var(--color-text-heading-1); }
+    .drawer-title { font-size: var(--font-size-h6); font-weight: var(--font-weight-semibold); color: var(--color-text-heading-2); }
+    .drawer-body { flex: 1; min-height: 0; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 0; }
+    /* SKU + 库存面板包裹容器，下方 24px 到 To 渠道 */
+    .sku-group { display: flex; flex-direction: column; }
+    .drawer-footer { flex-shrink: 0; background: #ffffff; border-top: 1px solid #E4E6EA; padding: 12px 24px; display: flex; justify-content: flex-end; align-items: center; gap: 12px; }
+
+    /* ── Form ── */
+    .form-field { display: flex; flex-direction: column; gap: var(--spacing-base-tight); }
+    .form-row { display: flex; flex-wrap: wrap; gap: var(--spacing-loose) var(--spacing-base-loose); }
+    .form-label { font-size: var(--font-size-regular); color: var(--color-text-body); display: flex; align-items: center; gap: 2px; }
+    .req { color: var(--color-error); }
+    .form-control { display: block; height: var(--control-height-md); padding: 0 var(--spacing-base); border: 1px solid var(--color-border-default); border-radius: var(--radius-small); font-size: var(--font-size-regular); color: var(--color-text-body); background: var(--color-bg-container); outline: none; transition: border-color 0.15s, box-shadow 0.15s; appearance: none; -webkit-appearance: none; }
+    .form-control:focus { border-color: var(--color-primary-focus); box-shadow: 0 0 0 2px rgba(52,107,250,0.12); }
+    .form-control::placeholder { color: var(--color-text-secondary); }
+    textarea.form-control { height: auto; min-height: 80px; padding: var(--spacing-tight) var(--spacing-base); resize: vertical; line-height: var(--line-height-regular); }
+    .select-wrap { position: relative; display: inline-block; }
+    .select-wrap::after { content: ''; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); border: 4px solid transparent; border-top-color: var(--color-text-secondary); border-bottom: none; pointer-events: none; }
+    .w-medium { width: var(--input-width-medium); }
+    .w-long   { width: var(--input-width-long); }
+
+    /* ──────────────────────────────────────────
+       业务复合组件：SearchSelect / Cascader
+    ────────────────────────────────────────── */
+    .cs-wrap { position: relative; display: inline-block; }
+
+    /* 触发控件 */
+    .cs-trigger {
+      height: var(--control-height-md);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-small);
+      display: flex; align-items: center;
+      padding: 0 var(--spacing-base);
+      cursor: pointer; background: var(--color-white);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      user-select: none;
+    }
+    .cs-trigger:hover { border-color: var(--color-primary-focus); }
+    .cs-trigger.open { border-color: var(--color-primary-focus); box-shadow: 0 0 0 2px rgba(52,107,250,0.12); }
+    .cs-value { flex: 1; font-size: var(--font-size-regular); color: var(--color-text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cs-value.selected { color: var(--color-text-body); }
+    /* 清除按钮：已选中 + 悬浮触发控件时显示，替代箭头 */
+    .cs-clear { display: none; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; color: var(--color-text-secondary); margin-right: 2px; flex-shrink: 0; cursor: pointer; }
+    .cs-clear:hover { background: var(--color-gray-3); color: var(--color-text-body); }
+    .cs-wrap:hover .cs-clear.show { display: flex; }
+    /* 悬浮时隐藏箭头、显示清除（已选中状态） */
+    .cs-wrap:hover .cs-clear.show ~ .cs-arrow { display: none; }
+    .cs-arrow { flex-shrink: 0; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); transition: transform 0.15s; }
+    .cs-trigger.open .cs-arrow { transform: rotate(180deg); }
+
+    /* 弹出面板 */
+    .cs-panel {
+      position: absolute; top: calc(100% + 4px); left: 0;
+      min-width: 100%;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-medium);
+      box-shadow: var(--shadow-3);
+      z-index: 999;
+      display: none;
+      flex-direction: column;
+      padding: 6px;
+      max-height: 350px;
+    }
+    .cs-panel.open { display: flex; }
+
+    /* 搜索框 */
+    .cs-search-wrap { position: relative; flex-shrink: 0; margin-bottom: 6px; }
+    .cs-search {
+      width: 100%; height: var(--control-height-md);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-small);
+      padding: 0 32px 0 var(--spacing-tight);
+      font-size: var(--font-size-regular); font-family: var(--font-family);
+      color: var(--color-text-body); background: var(--color-bg-container); outline: none;
+    }
+    .cs-search:focus { border-color: var(--color-primary-focus); }
+    .cs-search::placeholder { color: var(--color-text-secondary); }
+    .cs-search-icon { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: var(--color-text-secondary); pointer-events: none; }
+
+    /* 选项列表 */
+    .cs-list { overflow-y: auto; flex: 1; }
+    .cs-item {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 var(--spacing-tight);
+      border-radius: var(--radius-small);
+      cursor: pointer; transition: background 0.1s;
+      min-height: var(--control-height-md);
+    }
+    .cs-item:hover { background: var(--color-gray-1); }
+    .cs-item.selected { background: var(--color-primary-bg); }
+    .cs-item.selected .cs-item-main { color: var(--color-primary); }
+    .cs-item--double { min-height: 50px; padding: 5px var(--spacing-tight); }
+    .cs-item-main { font-size: var(--font-size-regular); color: var(--color-text-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cs-item.selected .cs-item-main { color: var(--color-primary); }
+    .cs-item-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cs-empty { padding: var(--spacing-base); text-align: center; font-size: var(--font-size-small); color: var(--color-text-secondary); }
+
+    /* 级联分组 */
+    .cs-group-head {
+      display: flex; align-items: center; gap: 4px;
+      padding: 0 var(--spacing-tight);
+      height: var(--control-height-md);
+      cursor: pointer; border-radius: var(--radius-small);
+      font-size: var(--font-size-regular); color: var(--color-text-body);
+      transition: background 0.1s;
+    }
+    .cs-group-head:hover { background: var(--color-gray-1); }
+    .cs-group-icon { flex-shrink: 0; color: var(--color-text-secondary); transition: transform 0.15s; }
+    .cs-group-icon.collapsed { transform: rotate(-90deg); }
+    .cs-group-children { overflow: hidden; }
+    .cs-group-children.hidden { display: none; }
+    .cs-item--child { padding-left: 28px; }
+
+    /* ── 提示 ── */
+    .info-hint { display: flex; align-items: center; gap: var(--spacing-extra-tight); padding: var(--spacing-tight) var(--spacing-base); background: var(--color-primary-bg); border-radius: var(--radius-small); color: var(--color-primary); font-size: var(--font-size-small); }
+
+    /* ── 库存面板 ── */
+    .stock-panel { display: none; }
+    /* 选中 SKU 后展开：与 SKU 字段间距 16px（sku-group 内部控制）*/
+    .stock-panel.visible { display: block; margin-top: var(--spacing-base); }
+    /* 子层级外层容器：灰底 #F3F5F8、padding 24px、无圆角、无投影 */
+    .stock-panel-wrap {
+      background: var(--color-bg-page);
+      padding: var(--spacing-loose);
+      border-radius: 0;
+      box-shadow: none;
+    }
+    /* 内层白色卡片：白底 + 边框、无圆角、无投影 */
+    .stock-panel-box { background: var(--color-bg-container); border: 1px solid var(--color-border-default); border-radius: 0; box-shadow: none; }
+    .stock-panel-head { display: flex; align-items: center; justify-content: space-between; padding: var(--spacing-base) var(--spacing-base-loose); background: var(--color-bg-container); border-bottom: 1px solid var(--color-border-default); }
+    .stock-panel-head-left { display: flex; align-items: center; gap: var(--spacing-tight); font-size: var(--font-size-regular); font-weight: var(--font-weight-semibold); color: var(--color-text-body); }
+    .sku-badge { background: var(--color-primary-bg); color: var(--color-primary); padding: 1px 8px; border-radius: var(--radius-full); font-size: var(--font-size-small); font-weight: var(--font-weight-semibold); }
+    .stock-panel-head-right { font-size: var(--font-size-small); color: var(--color-text-secondary); display: flex; align-items: center; gap: 4px; }
+    .filter-bar { display: flex; align-items: center; gap: var(--spacing-base-tight); padding: var(--spacing-base) var(--spacing-base-loose); border-bottom: 1px solid var(--color-border-default); flex-wrap: wrap; }
+    .filter-label { font-size: var(--font-size-regular); color: var(--color-text-body); white-space: nowrap; }
+    .reset-link { display: inline-flex; align-items: center; gap: 4px; background: none; border: none; cursor: pointer; color: var(--color-text-secondary); font-size: var(--font-size-regular); margin-left: auto; padding: 0; }
+    .reset-link:hover { color: var(--color-primary); }
+    .stock-table { width: 100%; border-collapse: collapse; font-size: var(--font-size-regular); }
+    /* 表格在灰底卡片内：表头改为白色 */
+    .stock-table thead { background: var(--color-bg-container); }
+    .stock-table th { padding: 12px var(--spacing-base); text-align: left; font-size: var(--font-size-small); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border-default); white-space: nowrap; }
+    .stock-table th.ar { text-align: right; }
+    .stock-table td { padding: 12px var(--spacing-base); border-bottom: 1px solid var(--color-border-default); color: var(--color-text-body); vertical-align: middle; cursor: pointer; }
+    .stock-table td.ar { text-align: right; }
+    .stock-table tbody tr:hover { background: var(--color-brand-1); }
+    .stock-table tbody tr.selected { background: var(--color-primary-bg); }
+    .stock-table tbody tr:last-child td { border-bottom: none; }
+    .stock-table .empty-td { text-align: center; padding: var(--spacing-extra-loose) !important; color: var(--color-text-secondary); }
+    .radio-col { width: 48px; }
+    input[type="radio"] { width: 16px; height: 16px; accent-color: var(--color-primary); cursor: pointer; }
+    .num { font-variant-numeric: tabular-nums; }
+    .num-warn { color: var(--color-warning); font-weight: var(--font-weight-semibold); }
+    .num-danger { color: var(--color-error); font-weight: var(--font-weight-semibold); }
+    .num-ok { font-weight: var(--font-weight-semibold); }
+    .pagination-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px var(--spacing-base); border-bottom: 1px solid var(--color-border-default); font-size: var(--font-size-small); color: var(--color-text-secondary); }
+    .page-nav { display: flex; align-items: center; gap: var(--spacing-extra-tight); }
+    .page-btn { width: 32px; height: 32px; border: 1px solid var(--color-border-default); border-radius: var(--radius-small); background: var(--color-white); color: var(--color-text-body); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color 0.12s, color 0.12s; }
+    .page-btn:hover:not(:disabled) { border-color: var(--color-primary); color: var(--color-primary); }
+    .page-btn:disabled { color: var(--color-text-disabled); cursor: not-allowed; }
+    .page-cur { width: 44px; height: 32px; border: 1px solid var(--color-primary); border-radius: var(--radius-small); background: var(--color-primary-bg); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-small); }
+    .selected-row { display: none; align-items: center; justify-content: space-between; padding: var(--spacing-base) var(--spacing-base-loose); border-top: 1px solid var(--color-border-default); }
+    .selected-row.visible { display: flex; }
+    .selected-info { display: flex; align-items: center; gap: var(--spacing-base); font-size: var(--font-size-regular); }
+    .sel-name { font-weight: var(--font-weight-semibold); }
+    .sel-stock { color: var(--color-text-secondary); }
+    .qty-group { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+    .qty-inline { display: flex; align-items: center; gap: var(--spacing-tight); }
+    .qty-label { font-size: var(--font-size-regular); white-space: nowrap; }
+    .qty-input { width: var(--input-width-number); height: var(--control-height-md); padding: 0 var(--spacing-tight); border: 1px solid var(--color-border-default); border-radius: var(--radius-small); font-size: var(--font-size-regular); color: var(--color-text-body); background: var(--color-bg-container); outline: none; transition: border-color 0.15s, box-shadow 0.15s; }
+    .qty-input:focus { border-color: var(--color-primary-focus); box-shadow: 0 0 0 2px rgba(52,107,250,0.12); }
+    .qty-input.is-error { border-color: var(--color-error); }
+    .qty-err { display: none; align-items: center; gap: 3px; font-size: 12px; color: var(--color-error); }
+    .qty-err.visible { display: flex; }
+    .tag { display: inline-flex; align-items: center; padding: 1px 8px; border-radius: var(--radius-tag); font-size: var(--font-size-small); color: var(--color-text-body); white-space: nowrap; }
+    .tag-ext-1 { background: var(--color-brand-2); }
+    .tag-ext-2 { background: var(--color-turquoise-2); }
+    .tag-ext-3 { background: var(--color-cyan-2); }
+    .tag-ext-4 { background: var(--color-green-2); }
+    .tag-ext-5 { background: var(--color-gold-2); }
+    .divider { border: none; border-top: 1px solid var(--color-border-default); margin: 0; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-super-tight); height: var(--control-height-md); padding: 0 var(--spacing-base); border-radius: var(--radius-small); font-size: var(--font-size-regular); border: 1px solid transparent; white-space: nowrap; cursor: pointer; transition: background 0.15s, border-color 0.15s, color 0.15s; }
+    .btn-primary { background: var(--color-primary); color: var(--color-text-inverse); border-color: var(--color-primary); }
+    .btn-primary:hover { background: var(--color-primary-hover); border-color: var(--color-primary-hover); }
+    .btn-default { background: var(--color-white); color: var(--color-text-body); border-color: var(--color-border-default); }
+    .btn-default:hover { border-color: var(--color-primary); color: var(--color-primary); }
+  </style>
+</head>
+<body>
+<div class="page-shell">
+  <aside class="erp-sidebar" id="erpNavSidebar" aria-label="一级导航"></aside>
+
+  <div class="erp-main">
+    <header class="erp-chrome">
+      <div class="tab-strip" role="tablist" aria-label="页签">
+        <button type="button" class="erp-tab active" role="tab" aria-selected="true"><span>SKU</span><span class="erp-tab-close" aria-label="关闭页签" onclick="event.stopPropagation()"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2L2 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span></button>
+        <button type="button" class="erp-tab" role="tab" aria-selected="false"><span>生产计划分析</span><span class="erp-tab-close" aria-label="关闭页签" onclick="event.stopPropagation()"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2L2 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span></button>
+        <button type="button" class="erp-tab" role="tab" aria-selected="false"><span>计划与交付</span><span class="erp-tab-close" aria-label="关闭页签" onclick="event.stopPropagation()"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2L2 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span></button>
+      </div>
+      <div class="erp-chrome-right">
+        <button type="button" class="chrome-icon-btn" title="智能助手" aria-label="智能助手"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="currentColor" stroke-width="1.3"/><path d="M9 5v2M9 11v2M5 9h2M11 9h2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+        <button type="button" class="chrome-icon-btn" title="意见反馈" aria-label="意见反馈"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4h10v8H7l-3 2V12H4V4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+        <button type="button" class="chrome-locale">美西<svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="margin-left:2px;vertical-align:middle" aria-hidden="true"><path d="M3.5 5.5L7 9l3.5-3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="chrome-time" id="chromeTime">2026/04/27 00:00:00</span>
+        <button type="button" class="chrome-user" aria-label="账户菜单">
+          <span class="chrome-avatar" aria-hidden="true">SC</span>
+          <span class="chrome-user-name">Sonia Cai<svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="margin-left:2px;vertical-align:middle" aria-hidden="true"><path d="M3.5 5.5L7 9l3.5-3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+      </div>
+    </header>
+    <div class="list-content">
+      <div class="list-toolbar">
+        <button class="btn btn-primary" onclick="openDrawer()"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg> 新增</button>
+        <button class="btn btn-default">新增配件</button><button class="btn btn-default">批量修改</button><button class="btn btn-default">发布</button><button class="btn btn-default">导出</button>
+      </div>
+      <div class="list-bg">
+        <div class="list-head"><div class="col-sm">序号</div><div class="col-lg">SKU</div><div class="col-lg">Model</div><div class="col">包装型号</div><div class="col">品类</div></div>
+        <div class="list-row"><div class="col-sm">01</div><div class="col-lg">10-01008-102</div><div class="col-lg">DR-HAC001</div><div class="col">–</div><div class="col">空调</div></div>
+        <div class="list-row"><div class="col-sm">02</div><div class="col-lg">10-11001-1110</div><div class="col-lg">DR-HAC001</div><div class="col">–</div><div class="col">空调</div></div>
+        <div class="list-row"><div class="col-sm">03</div><div class="col-lg">10-PH100-AU</div><div class="col-lg">DR-PH100</div><div class="col">–</div><div class="col">除湿机</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="drawer-mask" id="drawerMask" onclick="closeDrawer()"></div>
+
+  <!-- ══ 抽屉 ══ -->
+  <div class="drawer" id="drawer">
+    <div class="drawer-header">
+      <button class="drawer-close" onclick="closeDrawer()"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+      <span class="drawer-title">新增渠道调拨记录</span>
+    </div>
+
+    <div class="drawer-body">
+
+      <!-- SKU + 库存面板：封装为单组，内部控制 16px 间距 -->
+      <div class="sku-group">
+
+        <div class="form-field">
+          <label class="form-label"><span class="req">*</span>&nbsp;SKU</label>
+          <div id="skuSelectMount"></div>
+        </div>
+
+        <!-- 库存面板：灰底子层级卡片（选中 SKU 后展开，16px 间距） -->
+        <div class="stock-panel" id="stockPanel">
+        <div class="stock-panel-wrap">
+        <div class="stock-panel-box">
+          <div class="stock-panel-head">
+            <div class="stock-panel-head-left">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L13 4v6l-6 3L1 10V4l6-3Z" stroke="var(--color-primary)" stroke-width="1.4" stroke-linejoin="round"/></svg>
+              渠道库存 · <span class="sku-badge" id="currentSkuBadge"></span>
+            </div>
+            <div class="stock-panel-head-right">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M6 11 3 8M6 11l3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              已按可用库存从高到低排列
+            </div>
+          </div>
+
+          <!-- 筛选栏 -->
+          <div class="filter-bar">
+            <span class="filter-label">From 渠道</span>
+            <div id="filterChannelMount"></div>
+            <span class="filter-label">仓库名称</span>
+            <div id="filterWarehouseMount"></div>
+            <button class="reset-link" onclick="resetFilter()">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8a6 6 0 1 1 1.2 3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M2 12V8h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              重置
+            </button>
+          </div>
+
+          <table class="stock-table">
+            <thead><tr><th class="radio-col"></th><th>渠道</th><th>仓库</th><th class="ar">可用库存</th></tr></thead>
+            <tbody id="stockTbody"></tbody>
+          </table>
+
+          <div class="pagination-bar">
+            <span id="pgTotal">—</span>
+            <div class="page-nav">
+              <button class="page-btn" id="prevBtn" onclick="changePage(-1)" disabled><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              <div class="page-cur" id="pgIndicator">1/1</div>
+              <button class="page-btn" id="nextBtn" onclick="changePage(1)"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </div>
+          </div>
+
+          <div class="selected-row" id="selectedRow">
+            <div class="selected-info">
+              <span>已选择：</span><span class="sel-name" id="selName">—</span>
+              <span class="sel-stock" id="selStock"></span>
+            </div>
+            <div class="qty-group">
+              <div class="qty-inline">
+                <label class="qty-label"><span class="req">*</span>&nbsp;调拨数量：</label>
+                <input type="number" class="qty-input" id="qtyInput" min="1" placeholder="数量" oninput="validateQty(this)" />
+              </div>
+              <div class="qty-err" id="qtyErr">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" stroke="currentColor" stroke-width="1.2"/><path d="M6 4v3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="6" cy="8.5" r=".7" fill="currentColor"/></svg>
+                调拨数量超过可用库存
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        </div>
+
+      </div><!-- /sku-group -->
+
+      <div style="height:24px;flex-shrink:0"></div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label"><span class="req">*</span>&nbsp;To 渠道</label>
+          <div id="channelCascaderMount"></div>
+        </div>
+        <div class="form-field">
+          <label class="form-label"><span class="req">*</span>&nbsp;调拨日期</label>
+          <input type="date" class="form-control w-medium" id="transferDate" value="2026-04-27" min="2026-04-27" />
+        </div>
+      </div>
+
+      <div style="height:24px;flex-shrink:0"></div>
+
+      <!-- 审批人：ApproverSelect，400px -->
+      <div class="form-field">
+        <label class="form-label"><span class="req">*</span>&nbsp;审批人</label>
+        <div id="approverSelectMount"></div>
+      </div>
+
+      <div style="height:24px;flex-shrink:0"></div>
+
+      <!-- 备注 -->
+      <div class="form-field">
+        <label class="form-label">备注</label>
+        <textarea class="form-control w-long" id="remark" placeholder="请输入备注" maxlength="200" rows="3"></textarea>
+      </div>
+
+    </div>
+
+    <div class="drawer-footer">
+      <button class="btn btn-default" onclick="closeDrawer()">取消</button>
+      <button class="btn btn-default" onclick="handleSaveNext()">新增下一条</button>
+      <button class="btn btn-primary" onclick="handleSubmit()">确定</button>
+    </div>
+  </div>
+</div>
+
+<script>window.ERP_NAV_ACTIVE_KEY = 'inventory';</script>
+<script src="./ERP UI-skill/ASSETS/erp-nav-rail-figma.js"></script>
+<script>
+/* ══════════════════════════════════════════
+   业务数据
+══════════════════════════════════════════ */
+const SKU_OPTIONS = [
+  { code:'10-01008-102',  sub:'🇺🇸 美国 · 空调 · 智能加湿器 Pro' },
+  { code:'10-11001-1110', sub:'🇩🇪 德国 · 空调 · 空气净化器 Mini' },
+  { code:'10-PH100-AU',   sub:'🇦🇺 澳洲 · 除湿机 · 除湿机 X1' },
+  { code:'10-02001-105',  sub:'🇺🇸 美国 · 净化器 · 空气净化器 X2' },
+  { code:'10-03001-201',  sub:'🇬🇧 英国 · 空调 · 智能除湿机 Pro' },
+  { code:'10-04002-108',  sub:'🇯🇵 日本 · 净化器 · 迷你空气净化器' },
+];
+
+/* 渠道树：5个一级分类，与 business-components.md 保持一致 */
+const CHANNEL_GROUPS = [
+  { label:'B2C线上', children:['AMZ-S','WM-S','TK-S','Kohls-线上-B2C','Temu-线上-B2C','Monti-线上-B2C','Lowes-线上-B2C','GO10-线上-B2C','Wayfair-线上-B2C','Chewy-线上-B2C','Costco-线上-B2C','OTTO','AMZ-DE','Mercado','Shopvidi'] },
+  { label:'B2C线下', children:['线下(TGT DVS)','Grainger-线下-B2C'] },
+  { label:'B2B线上', children:['AMZ-C','WM-C','TK-C','BBY-C','QVC-C','THD-C','TGT-C(勿用)'] },
+  { label:'B2B线下', children:[] },
+  { label:'特殊业务渠道', children:['DREO','HSN'] },
+];
+
+const APPROVER_OPTIONS = [
+  { name:'周某某', sub:'管理层 Management · zhou.xx@dreo.com' },
+  { name:'Lisa 某', sub:'运营部 Operations · lisa.x@dreo.com' },
+  { name:'David 某', sub:'供应链 Supply Chain · david.x@dreo.com' },
+  { name:'张某某', sub:'财务部 Finance · zhang.xx@dreo.com' },
+  { name:'王某某', sub:'采购部 Procurement · wang.xx@dreo.com' },
+  { name:'李某某', sub:'仓储部 Warehouse · li.xx@dreo.com' },
+];
+
+/* 仓库主数据：name + code + type，供 WarehouseSelect 双行展示 */
+const WAREHOUSE_META = {
+  '中仓':         { code:'WH-CN-001', type:'平台仓' },
+  'TE_CO2仓':     { code:'WH-US-002', type:'第三方仓' },
+  'LGSON仓':      { code:'WH-US-003', type:'第三方仓' },
+  '暂存仓':       { code:'WH-CN-004', type:'暂存仓' },
+  'GPS_AZ02仓':   { code:'WH-US-005', type:'第三方仓' },
+  'GPS_AZ仓':     { code:'WH-US-006', type:'第三方仓' },
+  'HS-SBD-115仓': { code:'WH-US-007', type:'第三方仓' },
+  'PHX_AZ仓':     { code:'WH-US-008', type:'第三方仓' },
+  'GPS_AZ02仓':   { code:'WH-US-005', type:'第三方仓' },
+  'DE仓':         { code:'WH-DE-001', type:'平台仓' },
+  'UK仓':         { code:'WH-UK-001', type:'平台仓' },
+  'FR仓':         { code:'WH-FR-001', type:'平台仓' },
+  'SYD仓':        { code:'WH-AU-001', type:'第三方仓' },
+  'MEL仓':        { code:'WH-AU-002', type:'第三方仓' },
+  'NYC仓':        { code:'WH-US-009', type:'第三方仓' },
+  'JP仓':         { code:'WH-JP-001', type:'第三方仓' },
+};
+
+const STOCK_DATA = {
+  '10-01008-102': [
+    {channel:'AMZ-S',warehouse:'中仓',available:20020},{channel:'AMZ-S',warehouse:'TE_CO2仓',available:7703},
+    {channel:'AMZ-S',warehouse:'LGSON仓',available:1561},{channel:'AMZ-S',warehouse:'暂存仓',available:1437},
+    {channel:'FIV',warehouse:'暂存仓',available:1430},{channel:'AMZ-S',warehouse:'GPS_AZ02仓',available:1430},
+    {channel:'Temu-线上-B2C',warehouse:'TE_CO2仓',available:700},{channel:'TK-S',warehouse:'GPS_AZ仓',available:298},
+    {channel:'AMZ-DF',warehouse:'HS-SBD-115仓',available:105},{channel:'AMZ-DF',warehouse:'TE_CO2仓',available:98},
+    {channel:'AMZ-S',warehouse:'PHX_AZ仓',available:85},{channel:'FIV',warehouse:'GPS_AZ02仓',available:72},
+  ],
+  '10-11001-1110': [
+    {channel:'AMZ-S',warehouse:'DE仓',available:4320},{channel:'AMZ-DF',warehouse:'UK仓',available:2100},
+    {channel:'Temu-线上-B2C',warehouse:'FR仓',available:980},
+  ],
+  '10-PH100-AU': [
+    {channel:'AMZ-S',warehouse:'SYD仓',available:1250},{channel:'TK-S',warehouse:'MEL仓',available:430},
+  ],
+  '10-02001-105': [{channel:'AMZ-EU',warehouse:'DE仓',available:860},{channel:'FIV',warehouse:'UK仓',available:430}],
+  '10-03001-201': [{channel:'AMZ-S',warehouse:'NYC仓',available:520}],
+  '10-04002-108': [{channel:'TK-S',warehouse:'JP仓',available:310}],
+};
+const CH_TAG = {'AMZ-S':'tag-ext-1','AMZ-DF':'tag-ext-2','AMZ-EU':'tag-ext-3','FIV':'tag-ext-4','Temu-线上-B2C':'tag-ext-5','TK-S':'tag-ext-1'};
+
+/* ══════════════════════════════════════════
+   通用 SearchSelect 组件工厂
+   options: { mount, width, placeholder, searchable, items[], doubleRow, onSelect, onClear }
+   item: { value, label, sub? }
+══════════════════════════════════════════ */
+function createSearchSelect({ mount, width, placeholder, searchPlaceholder, items, doubleRow, onSelect, onClear }) {
+  let selected = null;
+  const id = 'cs_' + Math.random().toString(36).slice(2);
+
+  const wrap = document.createElement('div');
+  wrap.className = 'cs-wrap';
+  wrap.style.width = width + 'px';
+
+  wrap.innerHTML = `
+    <div class="cs-trigger" id="${id}_trigger">
+      <span class="cs-value" id="${id}_value">${placeholder}</span>
+      <span class="cs-clear" id="${id}_clear">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2L2 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </span>
+      <span class="cs-arrow">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </div>
+    <div class="cs-panel" id="${id}_panel">
+      <div class="cs-search-wrap">
+        <input class="cs-search" id="${id}_search" placeholder="${searchPlaceholder || '搜索...'}" />
+        <span class="cs-search-icon">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M9.5 9.5l2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </span>
+      </div>
+      <div class="cs-list" id="${id}_list"></div>
+    </div>`;
+
+  mount.appendChild(wrap);
+
+  const trigger = wrap.querySelector(`#${id}_trigger`);
+  const panel   = wrap.querySelector(`#${id}_panel`);
+  const valEl   = wrap.querySelector(`#${id}_value`);
+  const clearEl = wrap.querySelector(`#${id}_clear`);
+  const search  = wrap.querySelector(`#${id}_search`);
+  const list    = wrap.querySelector(`#${id}_list`);
+
+  function renderList(filter) {
+    const q = (filter||'').toLowerCase();
+    const filtered = items.filter(i => !q || i.label.toLowerCase().includes(q) || (i.sub||'').toLowerCase().includes(q));
+    if (!filtered.length) { list.innerHTML = `<div class="cs-empty">暂无匹配结果</div>`; return; }
+    list.innerHTML = filtered.map(i => `
+      <div class="cs-item ${doubleRow?'cs-item--double':''} ${selected===i.value?'selected':''}" data-value="${i.value}">
+        <div class="cs-item-main">${i.label}</div>
+        ${i.sub ? `<div class="cs-item-sub">${i.sub}</div>` : ''}
+      </div>`).join('');
+    list.querySelectorAll('.cs-item').forEach(el => {
+      el.addEventListener('click', () => {
+        const val = el.dataset.value;
+        selected = val;
+        const item = items.find(i => i.value === val);
+        valEl.textContent = item.label;
+        valEl.classList.add('selected');
+        clearEl.classList.add('show');
+        close();
+        onSelect && onSelect(val, item);
+      });
+    });
+  }
+
+  function open() {
+    panel.classList.add('open');
+    trigger.classList.add('open');
+    renderList('');
+    setTimeout(() => search.focus(), 50);
+  }
+  function close() {
+    panel.classList.remove('open');
+    trigger.classList.remove('open');
+    search.value = '';
+  }
+
+  trigger.addEventListener('click', e => { if (e.target === clearEl || clearEl.contains(e.target)) return; panel.classList.contains('open') ? close() : open(); });
+  clearEl.addEventListener('click', e => {
+    e.stopPropagation();
+    selected = null; valEl.textContent = placeholder;
+    valEl.classList.remove('selected'); clearEl.classList.remove('show');
+    onClear && onClear();
+  });
+  search.addEventListener('input', () => renderList(search.value));
+  document.addEventListener('click', e => { if (!wrap.contains(e.target)) close(); });
+
+  return {
+    getValue: () => selected,
+    setValue: (v, label) => { selected=v; valEl.textContent=label; valEl.classList.add('selected'); clearEl.classList.add('show'); },
+    clear: () => clearEl.click(),
+    updateItems: (newItems) => { items.length=0; items.push(...newItems); if (panel.classList.contains('open')) renderList(search.value); },
+  };
+}
+
+/* ══════════════════════════════════════════
+   级联渠道选择器 ChannelCascader
+══════════════════════════════════════════ */
+function createChannelCascader({ mount, width, placeholder, searchPlaceholder, groups, onSelect, onClear }) {
+  let selected = null;
+  const id = 'cc_' + Math.random().toString(36).slice(2);
+  const wrap = document.createElement('div');
+  wrap.className = 'cs-wrap';
+  wrap.style.width = width + 'px';
+
+  wrap.innerHTML = `
+    <div class="cs-trigger" id="${id}_trigger">
+      <span class="cs-value" id="${id}_value">${placeholder}</span>
+      <span class="cs-clear" id="${id}_clear">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2L2 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </span>
+      <span class="cs-arrow"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="cs-panel" id="${id}_panel">
+      <div class="cs-search-wrap">
+        <input class="cs-search" id="${id}_search" placeholder="${searchPlaceholder || '支持搜索：地区、渠道'}" />
+        <span class="cs-search-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M9.5 9.5l2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+      </div>
+      <div class="cs-list" id="${id}_list"></div>
+    </div>`;
+
+  mount.appendChild(wrap);
+
+  const trigger = wrap.querySelector(`#${id}_trigger`);
+  const panel   = wrap.querySelector(`#${id}_panel`);
+  const valEl   = wrap.querySelector(`#${id}_value`);
+  const clearEl = wrap.querySelector(`#${id}_clear`);
+  const search  = wrap.querySelector(`#${id}_search`);
+  const list    = wrap.querySelector(`#${id}_list`);
+
+  const expandState = {};
+  groups.forEach(g => { expandState[g.label] = true; }); // 默认展开
+
+  function renderCascader(q) {
+    list.innerHTML = '';
+    groups.forEach(g => {
+      const children = g.children.filter(c => !q || c.toLowerCase().includes(q));
+      const groupMatch = !q || g.label.toLowerCase().includes(q);
+      if (!q && !groupMatch && !children.length) return;
+      if (q && !groupMatch && !children.length) return;
+
+      const groupDiv = document.createElement('div');
+
+      // 分组标题
+      const head = document.createElement('div');
+      head.className = 'cs-group-head';
+      const expanded = expandState[g.label];
+      head.innerHTML = `
+        <span class="cs-group-icon ${expanded?'':'collapsed'}">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span>${g.label}</span>`;
+      head.addEventListener('click', () => {
+        expandState[g.label] = !expandState[g.label];
+        renderCascader(search.value);
+      });
+      groupDiv.appendChild(head);
+
+      // 子选项
+      const childWrap = document.createElement('div');
+      childWrap.className = `cs-group-children ${expanded ? '' : 'hidden'}`;
+      children.forEach(c => {
+        const item = document.createElement('div');
+        item.className = `cs-item cs-item--child ${selected === c ? 'selected' : ''}`;
+        item.innerHTML = `<div class="cs-item-main">${c}</div>`;
+        item.addEventListener('click', () => {
+          selected = c;
+          valEl.textContent = c; valEl.classList.add('selected');
+          clearEl.classList.add('show');
+          close();
+          onSelect && onSelect(c);
+        });
+        childWrap.appendChild(item);
+      });
+      groupDiv.appendChild(childWrap);
+      list.appendChild(groupDiv);
+    });
+  }
+
+  function open() { panel.classList.add('open'); trigger.classList.add('open'); renderCascader(''); setTimeout(() => search.focus(), 50); }
+  function close() { panel.classList.remove('open'); trigger.classList.remove('open'); search.value = ''; }
+
+  trigger.addEventListener('click', e => { if (clearEl.contains(e.target)) return; panel.classList.contains('open') ? close() : open(); });
+  clearEl.addEventListener('click', e => {
+    e.stopPropagation(); selected = null;
+    valEl.textContent = placeholder; valEl.classList.remove('selected'); clearEl.classList.remove('show');
+    onClear && onClear();
+  });
+  search.addEventListener('input', () => renderCascader(search.value.toLowerCase()));
+  document.addEventListener('click', e => { if (!wrap.contains(e.target)) close(); });
+
+  return {
+    getValue: () => selected,
+    clear: () => clearEl.click(),
+  };
+}
+
+/* ══════════════════════════════════════════
+   表格逻辑
+══════════════════════════════════════════ */
+const PAGE_SIZE = 10;
+let allRows=[], filtered=[], currentPage=1, selectedAvail=0;
+let skuCtrl, channelCtrl, approverCtrl;
+
+function openDrawer()  { document.getElementById('drawer').classList.add('open'); document.getElementById('drawerMask').classList.add('visible'); document.body.style.overflow='hidden'; }
+function closeDrawer() { document.getElementById('drawer').classList.remove('open'); document.getElementById('drawerMask').classList.remove('visible'); document.body.style.overflow=''; }
+
+function onSkuSelected(val) {
+  clearSel();
+  const panel = document.getElementById('stockPanel');
+  if (!val) { panel.classList.remove('visible'); return; }
+  document.getElementById('currentSkuBadge').textContent = val;
+  if (window.filterChannelCtrl)   window.filterChannelCtrl.clear();
+  if (window.filterWarehouseCtrl) window.filterWarehouseCtrl.clear();
+  allRows = STOCK_DATA[val]||[]; filtered=[...allRows]; currentPage=1;
+  populateWarehouseOptions(allRows);
+  renderPage(); panel.classList.add('visible');
+}
+
+/* 仓库选项随 SKU 动态更新，双行：主行=仓库名称，辅助行=编码·类型 */
+function populateWarehouseOptions(rows) {
+  const warehouses = [...new Set(rows.map(r => r.warehouse))];
+  if (window.filterWarehouseCtrl) {
+    window.filterWarehouseCtrl.updateItems(
+      warehouses.map(w => {
+        const meta = WAREHOUSE_META[w] || {};
+        return {
+          value: w,
+          label: w,
+          sub: [meta.code, meta.type].filter(Boolean).join(' · '),
+        };
+      })
+    );
+  }
+}
+
+function applyFilter() {
+  const ch = window.filterChannelCtrl   ? window.filterChannelCtrl.getValue()   : null;
+  const wh = window.filterWarehouseCtrl ? window.filterWarehouseCtrl.getValue() : null;
+  filtered = allRows.filter(r => (!ch||r.channel===ch) && (!wh||r.warehouse===wh));
+  currentPage=1; clearSel(); renderPage();
+}
+function resetFilter() {
+  if (window.filterChannelCtrl)   window.filterChannelCtrl.clear();
+  if (window.filterWarehouseCtrl) window.filterWarehouseCtrl.clear();
+  filtered=[...allRows]; currentPage=1; clearSel(); renderPage();
+}
+function changePage(d) {
+  const tp=Math.ceil(filtered.length/PAGE_SIZE);
+  currentPage=Math.max(1,Math.min(tp,currentPage+d));
+  clearSel(); renderPage();
+}
+function renderPage() {
+  const tbody=document.getElementById('stockTbody');
+  const tp=Math.max(1,Math.ceil(filtered.length/PAGE_SIZE));
+  document.getElementById('pgTotal').innerHTML=filtered.length===allRows.length?`共 <strong>${allRows.length}</strong> 条数据`:`筛选结果 <strong>${filtered.length}</strong> 条（共 ${allRows.length} 条）`;
+  document.getElementById('pgIndicator').textContent=`${currentPage}/${tp}`;
+  document.getElementById('prevBtn').disabled=currentPage<=1;
+  document.getElementById('nextBtn').disabled=currentPage>=tp;
+  const rows=filtered.slice((currentPage-1)*PAGE_SIZE,currentPage*PAGE_SIZE);
+  if(!rows.length){tbody.innerHTML=`<tr><td colspan="4" class="empty-td">暂无符合条件的库存数据</td></tr>`;return;}
+  tbody.innerHTML=rows.map((r,i)=>{
+    const ai=(currentPage-1)*PAGE_SIZE+i;
+    const cls=r.available<100?'num-danger':r.available<300?'num-warn':'num-ok';
+    return `<tr data-ai="${ai}" onclick="selectRow(this,${ai})"><td class="radio-col"><input type="radio" name="stockRow" value="${ai}" /></td><td>${r.channel}</td><td>${r.warehouse}</td><td class="ar"><span class="num ${cls}">${r.available.toLocaleString()}</span></td></tr>`;
+  }).join('');
+}
+function selectRow(tr,idx) {
+  document.querySelectorAll('#stockTbody tr').forEach(r=>r.classList.remove('selected'));
+  tr.classList.add('selected');
+  const rb=tr.querySelector('input[type="radio"]'); if(rb) rb.checked=true;
+  const r=filtered[idx]; selectedAvail=r.available;
+  document.getElementById('selName').textContent=`${r.channel} ${r.warehouse}`;
+  document.getElementById('selStock').textContent=`当前来源可用库存：${r.available.toLocaleString()}`;
+  document.getElementById('qtyInput').value=''; document.getElementById('qtyInput').max=r.available;
+  document.getElementById('qtyInput').classList.remove('is-error'); document.getElementById('qtyErr').classList.remove('visible');
+  document.getElementById('selectedRow').classList.add('visible');
+}
+function clearSel() { document.getElementById('selectedRow').classList.remove('visible'); selectedAvail=0; }
+function validateQty(input) {
+  const v=parseInt(input.value,10), bad=input.value!==''&&!isNaN(v)&&(v<1||v>selectedAvail);
+  input.classList.toggle('is-error',bad); document.getElementById('qtyErr').classList.toggle('visible',bad);
+}
+function handleSubmit() {
+  if(!skuCtrl.getValue()){alert('请选择 SKU');return;}
+  if(!document.getElementById('selectedRow').classList.contains('visible')){alert('请在库存表格中选择调拨来源行');return;}
+  const qty=parseInt(document.getElementById('qtyInput').value,10);
+  if(!qty||qty<1){alert('请填写调拨数量（≥ 1）');return;}
+  if(qty>selectedAvail){alert('调拨数量超过可用库存，请修正');return;}
+  if(!channelCtrl.getValue()){alert('请选择 To 渠道');return;}
+  if(!document.getElementById('transferDate').value){alert('请选择调拨日期');return;}
+  if(!approverCtrl.getValue()){alert('请选择审批人');return;}
+  alert('✅ 调拨申请已提交！'); closeDrawer();
+}
+function handleSaveNext() { alert('保存当前并继续新增下一条'); }
+
+/* ══════════════════════════════════════════
+   初始化：挂载业务组件
+══════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  if (typeof mountErpNavRailFromFigma === 'function') mountErpNavRailFromFigma();
+
+  // SKUSelect：双行，400px，统一业务组件
+  skuCtrl = createSearchSelect({
+    mount: document.getElementById('skuSelectMount'),
+    width: 400,
+    placeholder: '请选择对应SKU',
+    searchPlaceholder: '支持搜索：SKU编码、地区、品类、物料编码',
+    items: SKU_OPTIONS.map(s => ({ value: s.code, label: s.code, sub: s.sub })),
+    doubleRow: true,
+    onSelect: (val) => onSkuSelected(val),
+    onClear: () => { onSkuSelected(null); },
+  });
+
+  // WarehouseSelect（仓库名称筛选栏）：搜索下拉双行，240px
+  window.filterWarehouseCtrl = createSearchSelect({
+    mount: document.getElementById('filterWarehouseMount'),
+    width: 240,
+    placeholder: '请选择对应仓库',
+    searchPlaceholder: '支持搜索：仓库编码、地区',
+    items: [],
+    doubleRow: true,
+    onSelect: () => applyFilter(),
+    onClear:  () => applyFilter(),
+  });
+
+  // ChannelSelect（From 渠道筛选栏）：树选择，240px
+  window.filterChannelCtrl = createChannelCascader({
+    mount: document.getElementById('filterChannelMount'),
+    width: 240,
+    placeholder: '请选择对应渠道',
+    searchPlaceholder: '支持搜索：地区、渠道',
+    groups: CHANNEL_GROUPS,
+    onSelect: () => applyFilter(),
+    onClear:  () => applyFilter(),
+  });
+
+  // ChannelSelect（To 渠道）：树选择，240px
+  channelCtrl = createChannelCascader({
+    mount: document.getElementById('channelCascaderMount'),
+    width: 240,
+    placeholder: '请选择对应渠道',
+    searchPlaceholder: '支持搜索：地区、渠道',
+    groups: CHANNEL_GROUPS,
+  });
+
+  // PersonSelect（审批人）：双行，固定 400px
+  approverCtrl = createSearchSelect({
+    mount: document.getElementById('approverSelectMount'),
+    width: 400,
+    placeholder: '请选择对应人员',
+    searchPlaceholder: '支持搜索：人名、部门',
+    items: APPROVER_OPTIONS.map(a => ({ value: a.name, label: a.name, sub: a.sub })),
+    doubleRow: true,
+  });
+
+  openDrawer();
+
+  function tickChromeTime() {
+    var el = document.getElementById('chromeTime');
+    if (!el) return;
+    var d = new Date();
+    function p(n) { return String(n).padStart(2, '0'); }
+    el.textContent = d.getFullYear() + '/' + p(d.getMonth() + 1) + '/' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
+  }
+  tickChromeTime();
+  setInterval(tickChromeTime, 1000);
+});
+</script>
+</body>
+</html>
