@@ -189,11 +189,12 @@
     .page-title {
       font-size: var(--font-size-h5);
       font-weight: var(--font-weight-semibold);
-      color: var(--color-gray-7);
+      color: var(--color-text-heading-2);
       margin-bottom: var(--spacing-loose);
     }
     .list-toolbar { display: flex; align-items: center; gap: var(--spacing-base-tight); margin-bottom: var(--spacing-base); flex-wrap: wrap; }
     .list-bg { background: var(--color-white); border-radius: var(--radius-medium); box-shadow: var(--shadow-1); overflow: hidden; }
+    /* 与 channel-transfer-new.html 列表表头一致（操作类列表骨架） */
     .list-head { display: flex; padding: 10px var(--spacing-base); background: var(--color-gray-1); border-bottom: 1px solid var(--color-border-default); font-size: var(--font-size-small); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); }
     .col { flex: 1; padding: 0 var(--spacing-tight); min-width: 0; }
     .col-sm { flex: 0 0 72px; padding: 0 var(--spacing-tight); }
@@ -254,7 +255,8 @@
       flex-shrink: 0;
     }
     .drawer-close:hover { color: var(--color-text-heading-1); }
-    .drawer-title { font-size: var(--font-size-h6); font-weight: var(--font-weight-semibold); color: var(--color-gray-7); flex: 1; min-width: 0; }
+    /* 与 channel-transfer-new.html 抽屉标题一致（操作类表单抽屉顶栏） */
+    .drawer-title { font-size: var(--font-size-h6); font-weight: var(--font-weight-semibold); color: var(--color-text-heading-2); }
     .drawer-body {
       flex: 1;
       min-height: 0;
@@ -263,7 +265,7 @@
       display: flex;
       flex-direction: column;
     }
-    /* form-standard §2.1.3：只读 KV，左标签 · 右值；行间 16px；标签与值横向 12px */
+    /* form-standard §2.1.3：只读 KV；标签色 Gray7、宽自适应；行间 16px；标签与值横向 12px */
     .kv-stack { display: flex; flex-direction: column; gap: var(--spacing-base); }
     .kv-row {
       display: flex;
