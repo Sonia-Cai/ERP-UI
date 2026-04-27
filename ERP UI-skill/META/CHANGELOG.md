@@ -1,3 +1,6 @@
+## 2026.05.05
+- 优化：`channel-transfer-view.html` 抽屉内只读区改为 **SKU 单行** + **From/To、仓库名/编码、数量/状态** 各 **双列一行** + **审批人、备注** 单行；`good-case.md` §4 说明同步。
+
 ## 2026.05.04
 - 优化：`channel-transfer-view.html` 只读 KV 栈 **`.kv-stack`** 行间距显式为 **16px**（对齐 `form-standard.md` §2.1.3）。
 
