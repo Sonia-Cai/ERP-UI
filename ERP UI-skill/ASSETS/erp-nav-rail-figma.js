@@ -1,7 +1,7 @@
 /**
  * 一级侧栏：万物 Logo + 12 个导航项（与 Figma「ERP 导航」顺序、文案一致）。
  * 图标使用本地 SVG：`navigation/icons/nav-{slug}-{default|hover|active}.svg`
- * 资源路径相对**当前 HTML 页面**解析。HTML 在子目录时，须在加载本脚本前设置 `window.ERP_NAV_ASSET_BASE`（以 `/` 结尾），例如 `'../ERP UI-skill/ASSETS/navigation/'`。
+ * 资源路径相对**当前 HTML 页面**解析。默认假定 HTML 位于 `ERP UI-skill/demos/`。其他位置请在加载本脚本前设置 `window.ERP_NAV_ASSET_BASE`（以 `/` 结尾），例如仓库根目录下页面可为 `'./ERP UI-skill/ASSETS/navigation/'`。
  *
  * 选中项（与当前 demo 业务模块一致）：
  *   - `window.ERP_NAV_ACTIVE_KEY`：英文 slug 或中文模块名（见下方 KEY_ALIASES）
@@ -11,8 +11,8 @@
 (function (win) {
   'use strict';
 
-  /** 默认：HTML 在仓库根目录；子目录 demo 请预置 `window.ERP_NAV_ASSET_BASE` */
-  var ASSET_BASE = win.ERP_NAV_ASSET_BASE || './ERP UI-skill/ASSETS/navigation/';
+  /** 默认：HTML 在 `ERP UI-skill/demos/`；其他位置请预置 `window.ERP_NAV_ASSET_BASE` */
+  var ASSET_BASE = win.ERP_NAV_ASSET_BASE || '../ASSETS/navigation/';
   var ICON_BASE = ASSET_BASE + 'icons/';
 
   /** 业务口头模块名 → 与 icons 文件名一致的 slug */

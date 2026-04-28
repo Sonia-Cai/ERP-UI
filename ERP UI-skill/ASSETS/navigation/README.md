@@ -47,4 +47,4 @@ navigation/
 
 未设置时默认选中 **`purchase`（采购）**。
 
-若 HTML 不在仓库根目录（任意子路径），在引入脚本**之前**设置 **`window.ERP_NAV_ASSET_BASE`**（以 `/` 结尾），例如 `'../ERP UI-skill/ASSETS/navigation/'`，勿改脚本内默认值即可。
+若 HTML 不在 **`ERP UI-skill/demos/`**（例如放在仓库根目录），在引入脚本**之前**设置 **`window.ERP_NAV_ASSET_BASE`**（以 `/` 结尾），例如 `'./ERP UI-skill/ASSETS/navigation/'`；位于 **`demos/`** 内的页面可使用脚本默认相对路径，无需设置。

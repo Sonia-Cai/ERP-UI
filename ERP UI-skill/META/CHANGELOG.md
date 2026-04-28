@@ -1,3 +1,6 @@
+## 2026.04.27
+- **迁移**：静态业务 Demo 与 Token 预览自仓库根目录迁入 **`ERP UI-skill/demos/`**；页面内资源改为 **`../ASSETS/...`**；**`erp-nav-rail-figma.js`** 默认导航资源基路径假定 HTML 位于 **`demos/`**。根 **`README.md`**、**`ERP UI-skill/README.md`**、**`page-list.md`**、**`good-case.md`**、**`view-form-reference.md`**、**`view-form-standard.md`**、**`navigation-shell.md`**、**`ASSETS/navigation/README.md`** 等链接与说明已同步。
+
 ## 2026.05.08
 - 文档：完整仓库说明迁入 **`ERP UI-skill/README.md`**；根目录 **`README.md`** 仅保留简短引导与在线仓库链接。
 - **重构**：新增 **`REFERENCES/view-form-standard.md`**《查看类表单设计通用规范》（与 `form-standard.md` 并列；原 **form-standard §2.1.3～2.1.5** 条文迁入，**form-standard §2.1.3** 改为索引指向专章）。**`view-form-reference.md`** 重定位为**画板与 Demo 数值参照**，不再承担总则职责。已更新 **README**、**SKILL**、**good-case**、**page-list**、**channel-transfer-view.html**、**sku-packaging-dimensions-detail-view.html** 等引用。

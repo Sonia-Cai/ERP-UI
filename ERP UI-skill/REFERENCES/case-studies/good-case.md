@@ -2,7 +2,7 @@
 
 本页收录与 **ERP UI Skill**（`design-tokens`、`navigation-shell`、`form-standard`、`view-form-standard`、`business-components`、`page-list`、`view-form-reference` 等）对齐的可对照案例，供还原页面或 Agent 检索。**查看类表单**落地稿两种：**§4** 纯只读 KV（库存调拨）；**§5** 摘要 KV + **一级标题 + 二级灰底卡片**（产品 · SKU 包装尺寸，对齐 Figma「上下布局」稿）。
 
-**静态 HTML 示例（仓库根目录）：** **§2** 新增渠道调拨（`channel-transfer-new.html`）· **§4** 查看渠道调拨（`channel-transfer-view.html`）· **§5** SKU 包装尺寸详情（`sku-packaging-dimensions-detail-view.html`）
+**静态 HTML 示例（`ERP UI-skill/demos/`）：** **§2** 新增渠道调拨（`channel-transfer-new.html`）· **§4** 查看渠道调拨（`channel-transfer-view.html`）· **§5** SKU 包装尺寸详情（`sku-packaging-dimensions-detail-view.html`）
 
 ---
 
@@ -25,10 +25,10 @@
 
 ### 预览链接
 
-在**仓库根目录**用浏览器打开：  
-**[channel-transfer-new.html](../../../channel-transfer-new.html)**
+在 **`ERP UI-skill/demos/`** 用浏览器打开：  
+**[channel-transfer-new.html](../../demos/channel-transfer-new.html)**
 
-（路径相对于本文件：`REFERENCES/case-studies/` → 上三级到仓库根。）
+（路径相对于本文件：`REFERENCES/case-studies/` → 上两级到 **`ERP UI-skill/`**，再进入 **`demos/`**。）
 
 ### 布局与规范对齐说明（AI 可识别）
 
@@ -61,8 +61,8 @@
 
 ### 预览链接
 
-在**仓库根目录**用浏览器打开：  
-**[channel-transfer-view.html](../../../channel-transfer-view.html)**
+在 **`ERP UI-skill/demos/`** 用浏览器打开：  
+**[channel-transfer-view.html](../../demos/channel-transfer-view.html)**
 
 ### 布局与规范对齐说明（AI 可识别）
 
@@ -79,5 +79,5 @@
 
 ### 预览链接
 
-在**仓库根目录**用浏览器打开：  
-**[sku-packaging-dimensions-detail-view.html](../../../sku-packaging-dimensions-detail-view.html)**
+在 **`ERP UI-skill/demos/`** 用浏览器打开：  
+**[sku-packaging-dimensions-detail-view.html](../../demos/sku-packaging-dimensions-detail-view.html)**

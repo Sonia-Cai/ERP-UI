@@ -164,7 +164,7 @@
 - **导航图标**：`ASSETS/navigation/icons/nav-{slug}-{default|hover|active}.svg`  
   - `default` = 设计导出「未选中」，`hover` = 「高亮」，`active` = 「选中」  
   - `slug` 与中文模块对照见 **`ASSETS/navigation/README.md`**
-- 挂载脚本：**`ASSETS/erp-nav-rail-figma.js`**，由仓库根目录 **`channel-transfer-new.html`** 等页面引用；`DOMContentLoaded` 时执行 `mountErpNavRailFromFigma()` 写入 `#erpNavSidebar`，并按悬停切换 `default` / `hover` / `active` 图标。HTML 不在仓库根目录时须预置 **`window.ERP_NAV_ASSET_BASE`**（见脚本文件头注释与 **`case-studies/good-case.md`** 索引）。
+- 挂载脚本：**`ASSETS/erp-nav-rail-figma.js`**，由 **`demos/channel-transfer-new.html`** 等页面引用；`DOMContentLoaded` 时执行 `mountErpNavRailFromFigma()` 写入 `#erpNavSidebar`，并按悬停切换 `default` / `hover` / `active` 图标。HTML 不在 **`demos/`** 时须在引入脚本前设置 **`window.ERP_NAV_ASSET_BASE`**（见脚本文件头与 **`ASSETS/navigation/README.md`**、**`case-studies/good-case.md`** 索引）。
 - **工作台**（`nav-workbench-*`）已整理在 `icons/`，主序列暂未使用；**客服**（`nav-customer-service-*`）为侧栏第 **10** 项。
-- 若 HTML 不在仓库根目录，请修改 `erp-nav-rail-figma.js` 顶部的 **`ASSET_BASE`** 相对路径。
+- 勿直接改脚本源码中的默认路径；通过 **`window.ERP_NAV_ASSET_BASE`** 覆盖即可。
 - **业务 Demo 与侧栏选中一致**：在页面中于引入 `erp-nav-rail-figma.js` **之前**设置 `window.ERP_NAV_ACTIVE_KEY`（或 `ERP_NAV_ACTIVE_INDEX`）。标准需求话术见 **`META/SKILL.md` →「需求提交模板」**；`slug`/中文别名见 **`ASSETS/navigation/README.md`**。客服模块高亮使用 **`ERP_NAV_ACTIVE_KEY = 'customer-service'`** 或中文 **`客服`**。

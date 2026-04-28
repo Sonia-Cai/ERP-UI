@@ -8,7 +8,7 @@
 | **设计总则在哪里？** | **[`view-form-standard.md`](./view-form-standard.md)** — 与 [`form-standard.md`](./form-standard.md)（表单设计通用规范）并列的**查看类表单设计通用规范**。 |
 | **画板与规范冲突时？** | 以 **`view-form-standard.md`** 为准；本文件表格中的 px、列名为**该稿示例**，勿写死为全系唯一常量。 |
 
-**Demo 定位：** 仓库根目录 HTML 仅演示**布局与 Token 用法**，业务文案可替换；索引见 **`case-studies/good-case.md`** **§4**、**§5**。
+**Demo 定位：** **`demos/`** 内 HTML 仅演示**布局与 Token 用法**，业务文案可替换；索引见 **`case-studies/good-case.md`** **§4**、**§5**。
 
 ---
 
@@ -37,7 +37,7 @@
 | :--- | :--- |
 | Figma | [SKU包装尺寸-详情表单](https://www.figma.com/design/EUNVfCK8meDTEw3LY8Mhmn/Untitled?node-id=19-34505)（`node-id=19-34505`） |
 | Figma · **上下布局**稿（只读摘要 + 二级卡片 KV） | [SKU包装尺寸-详情表单/上下布局](https://www.figma.com/design/EUNVfCK8meDTEw3LY8Mhmn/Untitled?node-id=20-35869)（`node-id=20-35869`） |
-| 静态 HTML Demo（对齐上下稿） | 仓库根目录 [`sku-packaging-dimensions-detail-view.html`](../../../sku-packaging-dimensions-detail-view.html) |
+| 静态 HTML Demo（对齐上下稿） | [`demos/sku-packaging-dimensions-detail-view.html`](../demos/sku-packaging-dimensions-detail-view.html) |
 | 业务 Tab 行 | 高约 **46px**，底部分割线拉通主内容 |
 | 筛选行 | **5×** `--input-width-medium`（**240×32**），水平间距 **16px**；与表体垂直间距可与列表页统一（**16px** 或 **24px**） |
 | 表格工具栏 | 左：**32px** 高按钮组；右：**18px** 图标（刷新、密度、设置），与内容区右内边距 **24px** 对齐 |

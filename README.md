@@ -1,6 +1,6 @@
 # ERP-UI
 
-万物 ERP **B 端界面设计规范（UI Skill）** 与仓库根目录下的静态 **HTML Demo** 合集。
+万物 ERP **B 端界面设计规范（UI Skill）** 与技能包内 **`ERP UI-skill/demos/`** 静态 **HTML Demo** 合集。
 
 **在线仓库：** [github.com/Sonia-Cai/ERP-UI](https://github.com/Sonia-Cai/ERP-UI)
 
@@ -12,7 +12,7 @@
 
 **[ERP UI-skill/README.md](./ERP%20UI-skill/README.md)**
 
-根目录的 `channel-transfer-*.html`、`sku-packaging-dimensions-detail-view.html` 等需与 **`ERP UI-skill/`** 保持在**同一父目录**，以便加载 `./ERP UI-skill/ASSETS/` 中的样式与脚本。
+业务 Demo 与 Token 预览位于 **`ERP UI-skill/demos/`**，通过相对路径加载同包内 **`ERP UI-skill/ASSETS/`** 的样式与侧栏脚本。
 
 ---
 
