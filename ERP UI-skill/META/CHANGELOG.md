@@ -1,4 +1,5 @@
 ## 2026.05.08
+- 文档：完整仓库说明迁入 **`ERP UI-skill/README.md`**；根目录 **`README.md`** 仅保留简短引导与在线仓库链接。
 - **重构**：新增 **`REFERENCES/view-form-standard.md`**《查看类表单设计通用规范》（与 `form-standard.md` 并列；原 **form-standard §2.1.3～2.1.5** 条文迁入，**form-standard §2.1.3** 改为索引指向专章）。**`view-form-reference.md`** 重定位为**画板与 Demo 数值参照**，不再承担总则职责。已更新 **README**、**SKILL**、**good-case**、**page-list**、**channel-transfer-view.html**、**sku-packaging-dimensions-detail-view.html** 等引用。
 - 文档：`view-form-reference.md` 文首改为与 `form-standard.md` 一致的 **§1 规范概述**（**1.1** 目的、**1.2** 适用范围、**1.3** 与编辑类表单规范的关系、**1.4** 文档侧通用原则）；原「画板一～与规范索引」顺延为 **§2～§5**；`form-standard.md`、`sku-packaging-dimensions-detail-view.html` 注释及本 CHANGELOG 中对该文件的 § 引用已同步。
 - 规范：`form-standard.md` 新增 **§2.1.5**（查看类**两种典型落地**：连续只读 KV vs 摘要 + 一级分段 + 二级灰底卡片），与 **`good-case.md` §4 / §5** Demo 及 **`view-form-reference.md`** 画板索引对照；**§2.1.3**、**§11** 增加交叉引用。
