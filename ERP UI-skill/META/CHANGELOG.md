@@ -1,3 +1,6 @@
+## 2026.04.27（渠道调拨 Demo 合并）
+- **`channel-transfer-view.html`**：合并 **`channel-transfer-new`** 的编辑抽屉——列表工具栏「**新增**」打开；与「**查看**」只读抽屉互斥；`channel-transfer-new.html` 保留为仅新增参考并加注释。**`good-case.md` §2**、**`README.md`** 已更新。
+
 ## 2026.04.27
 - **迁移**：静态业务 Demo 与 Token 预览自仓库根目录迁入 **`ERP UI-skill/demos/`**；页面内资源改为 **`../ASSETS/...`**；**`erp-nav-rail-figma.js`** 默认导航资源基路径假定 HTML 位于 **`demos/`**。根 **`README.md`**、**`ERP UI-skill/README.md`**、**`page-list.md`**、**`good-case.md`**、**`view-form-reference.md`**、**`view-form-standard.md`**、**`navigation-shell.md`**、**`ASSETS/navigation/README.md`** 等链接与说明已同步。
 

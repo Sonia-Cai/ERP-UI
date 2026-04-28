@@ -2,7 +2,7 @@
 
 本页收录与 **ERP UI Skill**（`design-tokens`、`navigation-shell`、`form-standard`、`view-form-standard`、`business-components`、`page-list`、`view-form-reference` 等）对齐的可对照案例，供还原页面或 Agent 检索。**查看类表单**落地稿两种：**§4** 纯只读 KV（库存调拨）；**§5** 摘要 KV + **一级标题 + 二级灰底卡片**（产品 · SKU 包装尺寸，对齐 Figma「上下布局」稿）。
 
-**静态 HTML 示例（`ERP UI-skill/demos/`）：** **§2** 新增渠道调拨（`channel-transfer-new.html`）· **§4** 查看渠道调拨（`channel-transfer-view.html`）· **§5** SKU 包装尺寸详情（`sku-packaging-dimensions-detail-view.html`）
+**静态 HTML 示例（`ERP UI-skill/demos/`）：** **§2** 渠道调拨列表 + **新增** + **查看**（`channel-transfer-view.html`，`channel-transfer-new.html` 为仅新增抽屉参考）· **§4** 同文件 §2 之查看抽屉 · **§5** SKU 包装尺寸详情（`sku-packaging-dimensions-detail-view.html`）
 
 ---
 
@@ -21,12 +21,13 @@
 
 ---
 
-## 2. 新增渠道调拨记录（静态 HTML Demo）
+## 2. 渠道调拨：列表 + 新增 + 查看（静态 HTML Demo）
 
 ### 预览链接
 
-在 **`ERP UI-skill/demos/`** 用浏览器打开：  
-**[channel-transfer-new.html](../../demos/channel-transfer-new.html)**
+在 **`ERP UI-skill/demos/`** 用浏览器打开（**主入口**：列表工具栏「新增」打开编辑抽屉，「查看」打开只读 KV 抽屉）：  
+**[channel-transfer-view.html](../../demos/channel-transfer-view.html)**  
+仅新增抽屉骨架（SKU 列表占位页）：**[channel-transfer-new.html](../../demos/channel-transfer-new.html)**
 
 （路径相对于本文件：`REFERENCES/case-studies/` → 上两级到 **`ERP UI-skill/`**，再进入 **`demos/`**。）
 
@@ -36,7 +37,7 @@
 2. **列表区**：面包屑/工具栏/表格骨架，见 `page-list.md`。  
 3. **抽屉表单**：SKU 搜索下拉（双行、400px）、From 筛选 + 渠道库存**子层级**灰底白卡表格（见 `form-standard.md` 第 12 节）、To 渠道级联、调拨日期、审批人搜索下拉、备注、底栏按钮顺序（取消 / 新增下一条 / 确定）。  
 4. **业务组件**：SearchSelect / ChannelCascader 行为见 `business-components.md`。  
-5. **同模块只读查看**：列表 + 只读 KV 抽屉落地示例见 **§4**（`channel-transfer-view.html`）。  
+5. **同模块只读查看**：与上同一 HTML 内「查看」链接触发的只读 KV 抽屉，亦见 **§4**。  
 6. **查看类 + 二级卡片（产品域）**：列表 + 抽屉内分段与灰底卡片见 **§5**（`sku-packaging-dimensions-detail-view.html`）。
 
 ---
