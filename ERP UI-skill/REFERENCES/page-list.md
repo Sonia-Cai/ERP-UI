@@ -26,5 +26,5 @@
 
 与本规范及 **navigation-shell.md**、**form-standard.md**、**view-form-standard.md**、**business-components.md** 对齐的壳层 + 列表 + 抽屉示例，**索引与说明**见 **`case-studies/good-case.md`**（含预览链接与「AI 可识别」结构描述）。
 
-- 渠道调拨（列表 + **新增**编辑抽屉 + **查看**只读抽屉）Demo：**[channel-transfer-view.html](../demos/channel-transfer-view.html)**；仅新增抽屉参考：**[channel-transfer-new.html](../demos/channel-transfer-new.html)**。  
+- 渠道调拨（列表 + **新增**编辑抽屉 + **查看**只读抽屉）Demo：**[channel-transfer.html](../demos/channel-transfer.html)**。  
 - SKU 包装尺寸（**查看** + 二级卡片抽屉）Demo：**[sku-packaging-dimensions-detail-view.html](../demos/sku-packaging-dimensions-detail-view.html)**。  

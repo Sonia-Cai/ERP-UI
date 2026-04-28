@@ -113,7 +113,7 @@
 | **抽屉主体** | **单列栈**为主；短字段可 **双列一行**（每格内仍为上下 KV） | **摘要区**（常三列×多行）→ **一级标题行**分段 → **`--color-bg-page`** **二级卡片**（内边距 **24px**；卡片内纵向块间距可与画板对齐 **16px**，列间距 **24px**） |
 | **一级标题 / 弱链** | 一般无需多段；必要时单段可用 **`form-standard.md` §2.4** | 每段前 **2×16 条 + 16 Semibold**；标题旁可有弱链（如「填写示例」） |
 | **与 §2.4 关系** | 以 **类型①** 块间距为主 | 与 **类型③「一级带二级卡片」** 视觉同构；二级区为**只读 KV**，禁止可编辑控件外观 |
-| **静态 Demo** | `case-studies/good-case.md` **§4** → `demos/channel-transfer-view.html` | `case-studies/good-case.md` **§5** → `demos/sku-packaging-dimensions-detail-view.html` |
+| **静态 Demo** | `case-studies/good-case.md` **§4** → `demos/channel-transfer.html` | `case-studies/good-case.md` **§5** → `demos/sku-packaging-dimensions-detail-view.html` |
 | **画板索引** | `view-form-reference.md` **§2**（画板一） | `view-form-reference.md` **§3**（画板二，含上下布局稿） |
 
 **选型建议：** 字段少、无强分段语义 → 形态一；**多业务段、段内成簇** → 形态二。同一产品内形态不宜过多。

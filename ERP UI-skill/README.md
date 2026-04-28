@@ -22,8 +22,7 @@
 
 | 文件（相对本 README） | 说明 |
 |------|------|
-| [`demos/channel-transfer-view.html`](./demos/channel-transfer-view.html) | 渠道调拨：**列表** + 工具栏「**新增**」（编辑抽屉，与下项同源）+「**查看**」（只读 KV）。 |
-| [`demos/channel-transfer-new.html`](./demos/channel-transfer-new.html) | 渠道调拨：仅**新增**编辑抽屉（SKU 列表占位页；主流程见上一行）。 |
+| [`demos/channel-transfer.html`](./demos/channel-transfer.html) | 渠道调拨：**列表** + 工具栏「**新增**」（编辑抽屉）+「**查看**」（只读 KV）。 |
 | [`demos/sku-packaging-dimensions-detail-view.html`](./demos/sku-packaging-dimensions-detail-view.html) | 查看类**形态二**：摘要 + 一级分段 + 二级卡片抽屉。 |
 | [`demos/index.html`](./demos/index.html) / [`demos/style.css`](./demos/style.css) | Token 预览（可选）。 |
 

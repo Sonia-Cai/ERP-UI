@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>海外仓渠道调拨记录 · 列表 / 查看 / 新增</title>
+  <title>渠道调拨 · channel-transfer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -195,7 +195,7 @@
     }
     .list-toolbar { display: flex; align-items: center; gap: var(--spacing-base-tight); margin-bottom: var(--spacing-base); flex-wrap: wrap; }
     .list-bg { background: var(--color-white); border-radius: var(--radius-medium); box-shadow: var(--shadow-1); overflow: hidden; }
-    /* 与 channel-transfer-new.html 列表表头一致（操作类列表骨架） */
+    /* 操作类列表表头（page-list 列表骨架） */
     .list-head { display: flex; padding: 10px var(--spacing-base); background: var(--color-gray-1); border-bottom: 1px solid var(--color-border-default); font-size: var(--font-size-small); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); }
     .col { flex: 1; padding: 0 var(--spacing-tight); min-width: 0; }
     .col-sm { flex: 0 0 72px; padding: 0 var(--spacing-tight); }
@@ -219,7 +219,7 @@
     #drawer { z-index: 101; }
     #createMask { z-index: 150; }
     #createDrawer { z-index: 151; }
-    /* 新增表单抽屉：与 channel-transfer-new 一致，不设只读抽屉的 min-width */
+    /* 编辑抽屉不设只读抽屉的 min-width（表单区更宽） */
     #createDrawer.drawer { min-width: unset; }
 
     .drawer-mask { position: fixed; inset: 0; background: rgba(19,23,31,0.45); opacity: 0; transition: opacity 0.25s; pointer-events: none; }
@@ -262,7 +262,7 @@
       flex-shrink: 0;
     }
     .drawer-close:hover { color: var(--color-text-heading-1); }
-    /* 与 channel-transfer-new.html 抽屉标题一致（操作类表单抽屉顶栏） */
+    /* 操作类表单 / 只读抽屉顶栏标题（form-standard / view-form-standard） */
     .drawer-title { font-size: var(--font-size-h6); font-weight: var(--font-weight-semibold); color: var(--color-text-heading-2); }
     .drawer-body {
       flex: 1;
@@ -274,7 +274,7 @@
     }
     #createDrawer .drawer-body { gap: 0; }
 
-    /* ── 新增渠道调拨表单（与 channel-transfer-new 同源）── */
+    /* ── 新增渠道调拨编辑表单 ── */
     .form-field { display: flex; flex-direction: column; gap: var(--spacing-base-tight); }
     .form-row { display: flex; flex-wrap: wrap; gap: var(--spacing-loose) var(--spacing-base-loose); }
     .form-label { font-size: var(--font-size-regular); color: var(--color-text-body); display: flex; align-items: center; gap: 2px; }
@@ -701,7 +701,8 @@
 <script src="../ASSETS/erp-nav-rail-figma.js"></script>
 <script>
 /**
- * 列表：渠道调拨记录；工具栏「新增」打开与 channel-transfer-new 同源的编辑抽屉；「查看」打开只读 KV 抽屉。
+ * 渠道调拨：`demos/channel-transfer.html`
+ * 列表 + 工具栏「新增」编辑抽屉 + 行内「查看」只读 KV 抽屉（互斥）。
  * 只读版式：view-form-standard.md §2
  */
 

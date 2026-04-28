@@ -2,7 +2,7 @@
 
 本页收录与 **ERP UI Skill**（`design-tokens`、`navigation-shell`、`form-standard`、`view-form-standard`、`business-components`、`page-list`、`view-form-reference` 等）对齐的可对照案例，供还原页面或 Agent 检索。**查看类表单**落地稿两种：**§4** 纯只读 KV（库存调拨）；**§5** 摘要 KV + **一级标题 + 二级灰底卡片**（产品 · SKU 包装尺寸，对齐 Figma「上下布局」稿）。
 
-**静态 HTML 示例（`ERP UI-skill/demos/`）：** **§2** 渠道调拨列表 + **新增** + **查看**（`channel-transfer-view.html`，`channel-transfer-new.html` 为仅新增抽屉参考）· **§4** 同文件 §2 之查看抽屉 · **§5** SKU 包装尺寸详情（`sku-packaging-dimensions-detail-view.html`）
+**静态 HTML 示例（`ERP UI-skill/demos/`）：** **§2** 渠道调拨列表 + **新增** + **查看**（`channel-transfer.html`）· **§4** 同文件之查看只读抽屉 · **§5** SKU 包装尺寸详情（`sku-packaging-dimensions-detail-view.html`）
 
 ---
 
@@ -25,9 +25,8 @@
 
 ### 预览链接
 
-在 **`ERP UI-skill/demos/`** 用浏览器打开（**主入口**：列表工具栏「新增」打开编辑抽屉，「查看」打开只读 KV 抽屉）：  
-**[channel-transfer-view.html](../../demos/channel-transfer-view.html)**  
-仅新增抽屉骨架（SKU 列表占位页）：**[channel-transfer-new.html](../../demos/channel-transfer-new.html)**
+在 **`ERP UI-skill/demos/`** 用浏览器打开（列表工具栏「**新增**」打开编辑抽屉，「**查看**」打开只读 KV 抽屉）：  
+**[channel-transfer.html](../../demos/channel-transfer.html)**
 
 （路径相对于本文件：`REFERENCES/case-studies/` → 上两级到 **`ERP UI-skill/`**，再进入 **`demos/`**。）
 
@@ -51,7 +50,7 @@
 - **两则 Figma 画板的像素拆解、列表示例、链接**：[`view-form-reference.md`](../view-form-reference.md)  
 
 做「查看详情」「主从列表 + 只读抽屉」类 **Demo** 时：先对齐 **`view-form-standard.md`** 与 **`form-standard.md`**（Token、禁则、共用 §2.4）；再以 **`view-form-reference.md`** 对画板像素。  
-**已落地的参考实现**（库存 · 海外仓渠道调拨 · 查看）：见 **§4** — **`channel-transfer-view.html`**。  
+**已落地的参考实现**（库存 · 海外仓渠道调拨 · 查看）：见 **§4** — **`channel-transfer.html`**。  
 **已落地的参考实现**（产品 · SKU包装尺寸 · 查看 + 二级卡片）：见 **§5** — **`sku-packaging-dimensions-detail-view.html`**。
 
 ---
@@ -63,7 +62,7 @@
 ### 预览链接
 
 在 **`ERP UI-skill/demos/`** 用浏览器打开：  
-**[channel-transfer-view.html](../../demos/channel-transfer-view.html)**
+**[channel-transfer.html](../../demos/channel-transfer.html)**
 
 ### 布局与规范对齐说明（AI 可识别）
 
