@@ -221,7 +221,7 @@
       border-bottom-color: var(--color-primary);
     }
 
-    /* 筛选行：5×240×32，水平间距 16px（view-form-reference.md §2） */
+    /* 筛选行：5×240×32，水平间距 16px（view-form-reference.md §3 画板二） */
     .filter-row {
       display: flex;
       flex-wrap: wrap;
@@ -376,7 +376,7 @@
       flex-direction: column;
     }
 
-    /* 摘要区：两行 × 三列，块间 24px；格内上下 12px（Figma 20:36678，对齐 form-standard §2.1.3） */
+    /* 摘要区：两行 × 三列，块间 24px；格内上下 12px（Figma 20:36678，对齐 view-form-standard.md §2） */
     .drawer-summary { display: flex; flex-direction: column; gap: var(--spacing-loose); margin-bottom: var(--spacing-loose); }
     .kv-triple {
       display: grid;
@@ -698,7 +698,7 @@
 <script>
 /**
  * 对照 Figma：SKU包装尺寸-详情表单/上下布局（file EUNVfCK8meDTEw3LY8Mhmn，frame id 20:35869）。
- * 主区：业务 Tab + 5×240 筛选 + 表工具栏 + 46/68 表；抽屉：摘要 KV + 外箱 / 包装 / 产品 三段一级标题 + 二级灰底卡片内上下 KV（form-standard §2.1.3、§2.4）。
+ * 主区：业务 Tab + 5×240 筛选 + 表工具栏 + 46/68 表；抽屉：摘要 KV + 外箱 / 包装 / 产品 三段一级标题 + 二级灰底卡片内上下 KV（view-form-standard.md §2、§4；一级标题条 form-standard §2.4）。
  */
 function openDrawer() {
   document.getElementById('drawerMask').classList.add('visible');
